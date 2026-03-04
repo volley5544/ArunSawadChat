@@ -88,6 +88,11 @@ class SawadChatRoomRecord extends FirestoreRecord {
   bool hasChatRoomDisplayImageBlurHash() =>
       _chatRoomDisplayImageBlurHash != null;
 
+  // "chat_room_type" field.
+  String? _chatRoomType;
+  String get chatRoomType => _chatRoomType ?? '';
+  bool hasChatRoomType() => _chatRoomType != null;
+
   void _initializeFields() {
     _usersRef = getDataList(snapshotData['users_ref']);
     _usersEmployeeId = getDataList(snapshotData['users_employee_id']);
@@ -107,6 +112,7 @@ class SawadChatRoomRecord extends FirestoreRecord {
         getDataList(snapshotData['users_display_image_blur_hash']);
     _chatRoomDisplayImageBlurHash =
         snapshotData['chat_room_display_image_blur_hash'] as String?;
+    _chatRoomType = snapshotData['chat_room_type'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -152,6 +158,7 @@ Map<String, dynamic> createSawadChatRoomRecordData({
   String? chatRoomName,
   String? chatRoomDisplayImageUrl,
   String? chatRoomDisplayImageBlurHash,
+  String? chatRoomType,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -163,6 +170,7 @@ Map<String, dynamic> createSawadChatRoomRecordData({
       'chat_room_name': chatRoomName,
       'chat_room_display_image_url': chatRoomDisplayImageUrl,
       'chat_room_display_image_blur_hash': chatRoomDisplayImageBlurHash,
+      'chat_room_type': chatRoomType,
     }.withoutNulls,
   );
 
@@ -190,7 +198,8 @@ class SawadChatRoomRecordDocumentEquality
         listEquality.equals(e1?.usersDisplayImage, e2?.usersDisplayImage) &&
         listEquality.equals(
             e1?.usersDisplayImageBlurHash, e2?.usersDisplayImageBlurHash) &&
-        e1?.chatRoomDisplayImageBlurHash == e2?.chatRoomDisplayImageBlurHash;
+        e1?.chatRoomDisplayImageBlurHash == e2?.chatRoomDisplayImageBlurHash &&
+        e1?.chatRoomType == e2?.chatRoomType;
   }
 
   @override
@@ -208,7 +217,8 @@ class SawadChatRoomRecordDocumentEquality
         e?.usersName,
         e?.usersDisplayImage,
         e?.usersDisplayImageBlurHash,
-        e?.chatRoomDisplayImageBlurHash
+        e?.chatRoomDisplayImageBlurHash,
+        e?.chatRoomType
       ]);
 
   @override

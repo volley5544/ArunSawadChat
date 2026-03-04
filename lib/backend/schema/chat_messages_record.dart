@@ -20,11 +20,6 @@ class ChatMessagesRecord extends FirestoreRecord {
   DocumentReference? get messageBy => _messageBy;
   bool hasMessageBy() => _messageBy != null;
 
-  // "message_employee_id" field.
-  String? _messageEmployeeId;
-  String get messageEmployeeId => _messageEmployeeId ?? '';
-  bool hasMessageEmployeeId() => _messageEmployeeId != null;
-
   // "message_text" field.
   String? _messageText;
   String get messageText => _messageText ?? '';
@@ -75,11 +70,15 @@ class ChatMessagesRecord extends FirestoreRecord {
   String get messageByDisplayBlurHash => _messageByDisplayBlurHash ?? '';
   bool hasMessageByDisplayBlurHash() => _messageByDisplayBlurHash != null;
 
+  // "message_by_employee_id" field.
+  String? _messageByEmployeeId;
+  String get messageByEmployeeId => _messageByEmployeeId ?? '';
+  bool hasMessageByEmployeeId() => _messageByEmployeeId != null;
+
   DocumentReference get parentReference => reference.parent.parent!;
 
   void _initializeFields() {
     _messageBy = snapshotData['message_by'] as DocumentReference?;
-    _messageEmployeeId = snapshotData['message_employee_id'] as String?;
     _messageText = snapshotData['message_text'] as String?;
     _messageType = snapshotData['message_type'] as String?;
     _messageTime = snapshotData['message_time'] as DateTime?;
@@ -91,6 +90,7 @@ class ChatMessagesRecord extends FirestoreRecord {
     _messageImageBlurHash = snapshotData['message_image_blur_hash'] as String?;
     _messageByDisplayBlurHash =
         snapshotData['message_by_display_blur_hash'] as String?;
+    _messageByEmployeeId = snapshotData['message_by_employee_id'] as String?;
   }
 
   static Query<Map<String, dynamic>> collection([DocumentReference? parent]) =>
@@ -134,7 +134,6 @@ class ChatMessagesRecord extends FirestoreRecord {
 
 Map<String, dynamic> createChatMessagesRecordData({
   DocumentReference? messageBy,
-  String? messageEmployeeId,
   String? messageText,
   String? messageType,
   DateTime? messageTime,
@@ -145,11 +144,11 @@ Map<String, dynamic> createChatMessagesRecordData({
   String? messageByName,
   String? messageImageBlurHash,
   String? messageByDisplayBlurHash,
+  String? messageByEmployeeId,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
       'message_by': messageBy,
-      'message_employee_id': messageEmployeeId,
       'message_text': messageText,
       'message_type': messageType,
       'message_time': messageTime,
@@ -160,6 +159,7 @@ Map<String, dynamic> createChatMessagesRecordData({
       'message_by_name': messageByName,
       'message_image_blur_hash': messageImageBlurHash,
       'message_by_display_blur_hash': messageByDisplayBlurHash,
+      'message_by_employee_id': messageByEmployeeId,
     }.withoutNulls,
   );
 
@@ -173,7 +173,6 @@ class ChatMessagesRecordDocumentEquality
   @override
   bool equals(ChatMessagesRecord? e1, ChatMessagesRecord? e2) {
     return e1?.messageBy == e2?.messageBy &&
-        e1?.messageEmployeeId == e2?.messageEmployeeId &&
         e1?.messageText == e2?.messageText &&
         e1?.messageType == e2?.messageType &&
         e1?.messageTime == e2?.messageTime &&
@@ -183,13 +182,13 @@ class ChatMessagesRecordDocumentEquality
         e1?.messageByDisplayUrl == e2?.messageByDisplayUrl &&
         e1?.messageByName == e2?.messageByName &&
         e1?.messageImageBlurHash == e2?.messageImageBlurHash &&
-        e1?.messageByDisplayBlurHash == e2?.messageByDisplayBlurHash;
+        e1?.messageByDisplayBlurHash == e2?.messageByDisplayBlurHash &&
+        e1?.messageByEmployeeId == e2?.messageByEmployeeId;
   }
 
   @override
   int hash(ChatMessagesRecord? e) => const ListEquality().hash([
         e?.messageBy,
-        e?.messageEmployeeId,
         e?.messageText,
         e?.messageType,
         e?.messageTime,
@@ -199,7 +198,8 @@ class ChatMessagesRecordDocumentEquality
         e?.messageByDisplayUrl,
         e?.messageByName,
         e?.messageImageBlurHash,
-        e?.messageByDisplayBlurHash
+        e?.messageByDisplayBlurHash,
+        e?.messageByEmployeeId
       ]);
 
   @override

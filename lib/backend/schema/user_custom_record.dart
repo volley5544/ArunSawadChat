@@ -60,6 +60,11 @@ class UserCustomRecord extends FirestoreRecord {
   DateTime? get consentDate => _consentDate;
   bool hasConsentDate() => _consentDate != null;
 
+  // "sawad_chat_room_ref" field.
+  List<DocumentReference>? _sawadChatRoomRef;
+  List<DocumentReference> get sawadChatRoomRef => _sawadChatRoomRef ?? const [];
+  bool hasSawadChatRoomRef() => _sawadChatRoomRef != null;
+
   void _initializeFields() {
     _createdTime = snapshotData['created_time'] as DateTime?;
     _email = snapshotData['email'] as String?;
@@ -70,6 +75,7 @@ class UserCustomRecord extends FirestoreRecord {
     _imgProfileBlurHash = snapshotData['img_profile_blur_hash'] as String?;
     _goldCupConsent = snapshotData['gold_cup_consent'] as bool?;
     _consentDate = snapshotData['consent_date'] as DateTime?;
+    _sawadChatRoomRef = getDataList(snapshotData['sawad_chat_room_ref']);
   }
 
   static CollectionReference get collection =>
@@ -139,6 +145,7 @@ class UserCustomRecordDocumentEquality implements Equality<UserCustomRecord> {
 
   @override
   bool equals(UserCustomRecord? e1, UserCustomRecord? e2) {
+    const listEquality = ListEquality();
     return e1?.createdTime == e2?.createdTime &&
         e1?.email == e2?.email &&
         e1?.uid == e2?.uid &&
@@ -147,7 +154,8 @@ class UserCustomRecordDocumentEquality implements Equality<UserCustomRecord> {
         e1?.fcmToken == e2?.fcmToken &&
         e1?.imgProfileBlurHash == e2?.imgProfileBlurHash &&
         e1?.goldCupConsent == e2?.goldCupConsent &&
-        e1?.consentDate == e2?.consentDate;
+        e1?.consentDate == e2?.consentDate &&
+        listEquality.equals(e1?.sawadChatRoomRef, e2?.sawadChatRoomRef);
   }
 
   @override
@@ -160,7 +168,8 @@ class UserCustomRecordDocumentEquality implements Equality<UserCustomRecord> {
         e?.fcmToken,
         e?.imgProfileBlurHash,
         e?.goldCupConsent,
-        e?.consentDate
+        e?.consentDate,
+        e?.sawadChatRoomRef
       ]);
 
   @override

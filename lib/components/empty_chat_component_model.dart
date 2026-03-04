@@ -1,9 +1,9 @@
 import '/flutter_flow/flutter_flow_util.dart';
-import '/index.dart';
-import 'home_page_widget.dart' show HomePageWidget;
+import 'empty_chat_component_widget.dart' show EmptyChatComponentWidget;
 import 'package:flutter/material.dart';
 
-class HomePageModel extends FlutterFlowModel<HomePageWidget> {
+class EmptyChatComponentModel
+    extends FlutterFlowModel<EmptyChatComponentWidget> {
   @override
   void initState(BuildContext context) {}
 
