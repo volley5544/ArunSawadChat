@@ -1,79 +1,43 @@
 import '/backend/backend.dart';
-import '/components/chat_message_component_widget.dart';
 import '/components/empty_chat_component_widget.dart';
-import '/components/test_component_widget.dart';
+import '/components/work_follow_up_message_component_widget.dart';
 import '/flutter_flow/flutter_flow_expanded_image_view.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/upload_data.dart';
 import '/custom_code/actions/index.dart' as actions;
-import '/flutter_flow/custom_functions.dart' as functions;
 import '/flutter_flow/random_data_util.dart' as random_data;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_blurhash/flutter_blurhash.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:octo_image/octo_image.dart';
 import 'package:provider/provider.dart';
-import 'single_chat_room_page_model.dart';
-export 'single_chat_room_page_model.dart';
+import 'work_follow_up_group_page_model.dart';
+export 'work_follow_up_group_page_model.dart';
 
-class SingleChatRoomPageWidget extends StatefulWidget {
-  const SingleChatRoomPageWidget({
-    super.key,
-    required this.chatRoomDocRef,
-  });
+class WorkFollowUpGroupPageWidget extends StatefulWidget {
+  const WorkFollowUpGroupPageWidget({super.key});
 
-  final DocumentReference? chatRoomDocRef;
-
-  static String routeName = 'SingleChatRoomPage';
-  static String routePath = '/singleChatRoomPage';
+  static String routeName = 'WorkFollowUpGroupPage';
+  static String routePath = '/workFollowUpGroupPage';
 
   @override
-  State<SingleChatRoomPageWidget> createState() =>
-      _SingleChatRoomPageWidgetState();
+  State<WorkFollowUpGroupPageWidget> createState() =>
+      _WorkFollowUpGroupPageWidgetState();
 }
 
-class _SingleChatRoomPageWidgetState extends State<SingleChatRoomPageWidget> {
-  late SingleChatRoomPageModel _model;
+class _WorkFollowUpGroupPageWidgetState
+    extends State<WorkFollowUpGroupPageWidget> {
+  late WorkFollowUpGroupPageModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => SingleChatRoomPageModel());
-
-    // On page load action.
-    SchedulerBinding.instance.addPostFrameCallback((_) async {
-      _model.getUserProfile =
-          await UserCustomRecord.getDocumentOnce(FFAppState().userDocRef!);
-      FFAppState().userProfileData = UserProfileDataModelStruct(
-        createdTime: _model.getUserProfile?.createdTime,
-        email: _model.getUserProfile?.email,
-        uid: _model.getUserProfile?.uid,
-        imgProfile: _model.getUserProfile?.imgProfile,
-        employeeId: _model.getUserProfile?.employeeId,
-        fcmToken: _model.getUserProfile!.hasFcmToken()
-            ? _model.getUserProfile?.fcmToken
-            : '',
-        imgProfileBlurHash: _model.getUserProfile!.hasImgProfileBlurHash()
-            ? _model.getUserProfile?.imgProfileBlurHash
-            : '',
-        goldCupConsent: _model.getUserProfile!.hasGoldCupConsent()
-            ? _model.getUserProfile?.goldCupConsent
-            : false,
-        consentDate: _model.getUserProfile!.hasConsentDate()
-            ? _model.getUserProfile?.consentDate
-            : getCurrentTimestamp,
-        sawadChatRoomRef: _model.getUserProfile!.hasSawadChatRoomRef()
-            ? _model.getUserProfile?.sawadChatRoomRef
-            : _model.sawadChatRoomRefDefault,
-      );
-      safeSetState(() {});
-    });
+    _model = createModel(context, () => WorkFollowUpGroupPageModel());
 
     _model.textController ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
@@ -92,8 +56,9 @@ class _SingleChatRoomPageWidgetState extends State<SingleChatRoomPageWidget> {
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
 
-    return StreamBuilder<SawadChatRoomRecord>(
-      stream: SawadChatRoomRecord.getDocument(widget.chatRoomDocRef!),
+    return StreamBuilder<WorkFollowUpChatRoomRecord>(
+      stream: WorkFollowUpChatRoomRecord.getDocument(
+          FFAppState().workFollowUpGroupRef!),
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
@@ -113,7 +78,7 @@ class _SingleChatRoomPageWidgetState extends State<SingleChatRoomPageWidget> {
           );
         }
 
-        final singleChatRoomPageSawadChatRoomRecord = snapshot.data!;
+        final workFollowUpGroupPageWorkFollowUpChatRoomRecord = snapshot.data!;
 
         return GestureDetector(
           onTap: () {
@@ -143,126 +108,89 @@ class _SingleChatRoomPageWidgetState extends State<SingleChatRoomPageWidget> {
               title: Row(
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  if (singleChatRoomPageSawadChatRoomRecord.chatRoomType ==
-                      'group')
-                    Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 12.0, 0.0),
-                      child: Container(
-                        width: 50.0,
-                        height: 50.0,
-                        decoration: BoxDecoration(
-                          color:
-                              FlutterFlowTheme.of(context).secondaryBackground,
-                          shape: BoxShape.circle,
-                        ),
-                        child: InkWell(
-                          splashColor: Colors.transparent,
-                          focusColor: Colors.transparent,
-                          hoverColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
-                          onTap: () async {
-                            await Navigator.push(
-                              context,
-                              PageTransition(
-                                type: PageTransitionType.fade,
-                                child: FlutterFlowExpandedImageView(
-                                  image: OctoImage(
-                                    placeholderBuilder: (_) => SizedBox.expand(
-                                      child: Image(
-                                        image: BlurHashImage(
-                                            singleChatRoomPageSawadChatRoomRecord
-                                                .chatRoomDisplayImageBlurHash),
-                                        fit: BoxFit.cover,
-                                      ),
+                  Padding(
+                    padding:
+                        EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 12.0, 0.0),
+                    child: Container(
+                      width: 50.0,
+                      height: 50.0,
+                      decoration: BoxDecoration(
+                        color: FlutterFlowTheme.of(context).secondaryBackground,
+                        shape: BoxShape.circle,
+                      ),
+                      child: InkWell(
+                        splashColor: Colors.transparent,
+                        focusColor: Colors.transparent,
+                        hoverColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        onTap: () async {
+                          await Navigator.push(
+                            context,
+                            PageTransition(
+                              type: PageTransitionType.fade,
+                              child: FlutterFlowExpandedImageView(
+                                image: OctoImage(
+                                  placeholderBuilder: (_) => SizedBox.expand(
+                                    child: Image(
+                                      image: BlurHashImage(
+                                          workFollowUpGroupPageWorkFollowUpChatRoomRecord
+                                              .roomDisplayBlurHash),
+                                      fit: BoxFit.cover,
                                     ),
-                                    image: CachedNetworkImageProvider(
-                                      valueOrDefault<String>(
-                                        singleChatRoomPageSawadChatRoomRecord
-                                            .chatRoomDisplayImageUrl,
-                                        'https://firebasestorage.googleapis.com/v0/b/flut-flow-test.appspot.com/o/UsersProfileImage%2Fgroup-chat.png?alt=media&token=ec0e798c-11e6-4bc9-8b0a-7253e3960af0',
-                                      ),
+                                  ),
+                                  image: CachedNetworkImageProvider(
+                                    valueOrDefault<String>(
+                                      workFollowUpGroupPageWorkFollowUpChatRoomRecord
+                                          .roomDisplayImage,
+                                      'https://firebasestorage.googleapis.com/v0/b/flut-flow-test.appspot.com/o/UsersProfileImage%2Fgroup-chat.png?alt=media&token=ec0e798c-11e6-4bc9-8b0a-7253e3960af0',
                                     ),
-                                    fit: BoxFit.contain,
                                   ),
-                                  allowRotation: false,
-                                  tag: valueOrDefault<String>(
-                                    singleChatRoomPageSawadChatRoomRecord
-                                        .chatRoomDisplayImageUrl,
-                                    'https://firebasestorage.googleapis.com/v0/b/flut-flow-test.appspot.com/o/UsersProfileImage%2Fgroup-chat.png?alt=media&token=ec0e798c-11e6-4bc9-8b0a-7253e3960af0',
-                                  ),
-                                  useHeroAnimation: true,
+                                  fit: BoxFit.contain,
                                 ),
+                                allowRotation: false,
+                                tag: valueOrDefault<String>(
+                                  workFollowUpGroupPageWorkFollowUpChatRoomRecord
+                                      .roomDisplayImage,
+                                  'https://firebasestorage.googleapis.com/v0/b/flut-flow-test.appspot.com/o/UsersProfileImage%2Fgroup-chat.png?alt=media&token=ec0e798c-11e6-4bc9-8b0a-7253e3960af0',
+                                ),
+                                useHeroAnimation: true,
                               ),
-                            );
-                          },
-                          child: Hero(
-                            tag: valueOrDefault<String>(
-                              singleChatRoomPageSawadChatRoomRecord
-                                  .chatRoomDisplayImageUrl,
-                              'https://firebasestorage.googleapis.com/v0/b/flut-flow-test.appspot.com/o/UsersProfileImage%2Fgroup-chat.png?alt=media&token=ec0e798c-11e6-4bc9-8b0a-7253e3960af0',
                             ),
-                            transitionOnUserGestures: true,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(50.0),
-                              child: OctoImage(
-                                placeholderBuilder: (_) => SizedBox.expand(
-                                  child: Image(
-                                    image: BlurHashImage(
-                                        singleChatRoomPageSawadChatRoomRecord
-                                            .chatRoomDisplayImageBlurHash),
-                                    fit: BoxFit.cover,
-                                  ),
+                          );
+                        },
+                        child: Hero(
+                          tag: valueOrDefault<String>(
+                            workFollowUpGroupPageWorkFollowUpChatRoomRecord
+                                .roomDisplayImage,
+                            'https://firebasestorage.googleapis.com/v0/b/flut-flow-test.appspot.com/o/UsersProfileImage%2Fgroup-chat.png?alt=media&token=ec0e798c-11e6-4bc9-8b0a-7253e3960af0',
+                          ),
+                          transitionOnUserGestures: true,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(50.0),
+                            child: OctoImage(
+                              placeholderBuilder: (_) => SizedBox.expand(
+                                child: Image(
+                                  image: BlurHashImage(
+                                      workFollowUpGroupPageWorkFollowUpChatRoomRecord
+                                          .roomDisplayBlurHash),
+                                  fit: BoxFit.cover,
                                 ),
-                                image: CachedNetworkImageProvider(
-                                  valueOrDefault<String>(
-                                    singleChatRoomPageSawadChatRoomRecord
-                                        .chatRoomDisplayImageUrl,
-                                    'https://firebasestorage.googleapis.com/v0/b/flut-flow-test.appspot.com/o/UsersProfileImage%2Fgroup-chat.png?alt=media&token=ec0e798c-11e6-4bc9-8b0a-7253e3960af0',
-                                  ),
-                                ),
-                                width: double.infinity,
-                                height: double.infinity,
-                                fit: BoxFit.cover,
                               ),
+                              image: CachedNetworkImageProvider(
+                                valueOrDefault<String>(
+                                  workFollowUpGroupPageWorkFollowUpChatRoomRecord
+                                      .roomDisplayImage,
+                                  'https://firebasestorage.googleapis.com/v0/b/flut-flow-test.appspot.com/o/UsersProfileImage%2Fgroup-chat.png?alt=media&token=ec0e798c-11e6-4bc9-8b0a-7253e3960af0',
+                                ),
+                              ),
+                              width: double.infinity,
+                              height: double.infinity,
+                              fit: BoxFit.cover,
                             ),
                           ),
                         ),
                       ),
                     ),
-                  Text(
-                    valueOrDefault<String>(
-                      singleChatRoomPageSawadChatRoomRecord.chatRoomType ==
-                              'single'
-                          ? singleChatRoomPageSawadChatRoomRecord.usersName
-                              .elementAtOrNull(
-                                  singleChatRoomPageSawadChatRoomRecord
-                                              .usersRef.firstOrNull ==
-                                          FFAppState().userDocRef
-                                      ? 1
-                                      : 0)
-                          : '${singleChatRoomPageSawadChatRoomRecord.chatRoomName} (${singleChatRoomPageSawadChatRoomRecord.usersRef.length.toString()})',
-                      'room_name',
-                    ),
-                    style: FlutterFlowTheme.of(context).headlineMedium.override(
-                          font: GoogleFonts.interTight(
-                            fontWeight: FlutterFlowTheme.of(context)
-                                .headlineMedium
-                                .fontWeight,
-                            fontStyle: FlutterFlowTheme.of(context)
-                                .headlineMedium
-                                .fontStyle,
-                          ),
-                          color: Colors.white,
-                          fontSize: 18.0,
-                          letterSpacing: 0.0,
-                          fontWeight: FlutterFlowTheme.of(context)
-                              .headlineMedium
-                              .fontWeight,
-                          fontStyle: FlutterFlowTheme.of(context)
-                              .headlineMedium
-                              .fontStyle,
-                        ),
                   ),
                   InkWell(
                     splashColor: Colors.transparent,
@@ -270,8 +198,80 @@ class _SingleChatRoomPageWidgetState extends State<SingleChatRoomPageWidget> {
                     hoverColor: Colors.transparent,
                     highlightColor: Colors.transparent,
                     onTap: () async {
-                      await _model.listViewController2?.animateTo(
-                        _model.listViewController2!.position.maxScrollExtent,
+                      var messageRecordReference = MessageRecord.createDoc(
+                          FFAppState().workFollowUpGroupRef!);
+                      await messageRecordReference.set({
+                        ...createMessageRecordData(
+                          messageType: 'text',
+                          messageText:
+                              'แจ้งชำระเงินสำเร็จ (KBank)วัน/เวลาที่ส่งข้อความ : 27/03/2026 15:59:19ระบบ : ศรีสวัสดิ์ ประกันทันใจRef1 : 43064320260327151831Ref2 : 0010120260305862Biller ID : 010555912674765Sender Bank : SCBTransaction ID : KB001_20260327_014ED433E228A634D96สถานะ : ชำระแล้วจำนวนเงิน : 967.28วันที่ชำระเงิน : 2026-03-27เวลาชำระเงิน : 15:59:18รายละเอียดเพิ่มเติมชื่อลูกค้า : นางสาวอารียา ไชยแสนเบอร์โทรลูกค้า : 0637860359สาขา : ตำบลศรีสงครามบริษัท : ไทยไพบูลย์ประกันภัยรหัส source_refer_id : 215480รหัส log_source_id : 15833110',
+                          senderType: 'system',
+                        ),
+                        ...mapToFirestore(
+                          {
+                            'time': FieldValue.serverTimestamp(),
+                          },
+                        ),
+                      });
+                      _model.createInitialMessageDoc =
+                          MessageRecord.getDocumentFromData({
+                        ...createMessageRecordData(
+                          messageType: 'text',
+                          messageText:
+                              'แจ้งชำระเงินสำเร็จ (KBank)วัน/เวลาที่ส่งข้อความ : 27/03/2026 15:59:19ระบบ : ศรีสวัสดิ์ ประกันทันใจRef1 : 43064320260327151831Ref2 : 0010120260305862Biller ID : 010555912674765Sender Bank : SCBTransaction ID : KB001_20260327_014ED433E228A634D96สถานะ : ชำระแล้วจำนวนเงิน : 967.28วันที่ชำระเงิน : 2026-03-27เวลาชำระเงิน : 15:59:18รายละเอียดเพิ่มเติมชื่อลูกค้า : นางสาวอารียา ไชยแสนเบอร์โทรลูกค้า : 0637860359สาขา : ตำบลศรีสงครามบริษัท : ไทยไพบูลย์ประกันภัยรหัส source_refer_id : 215480รหัส log_source_id : 15833110',
+                          senderType: 'system',
+                        ),
+                        ...mapToFirestore(
+                          {
+                            'time': DateTime.now(),
+                          },
+                        ),
+                      }, messageRecordReference);
+
+                      await FFAppState()
+                          .workFollowUpGroupRef!
+                          .update(createWorkFollowUpChatRoomRecordData(
+                            lastMessage:
+                                _model.createInitialMessageDoc?.messageText,
+                            lastMessageBy: 'น้องทันใจ',
+                            lastMessageTime:
+                                _model.createInitialMessageDoc?.time,
+                          ));
+
+                      safeSetState(() {});
+                    },
+                    child: Text(
+                      workFollowUpGroupPageWorkFollowUpChatRoomRecord.roomName,
+                      style:
+                          FlutterFlowTheme.of(context).headlineMedium.override(
+                                font: GoogleFonts.interTight(
+                                  fontWeight: FlutterFlowTheme.of(context)
+                                      .headlineMedium
+                                      .fontWeight,
+                                  fontStyle: FlutterFlowTheme.of(context)
+                                      .headlineMedium
+                                      .fontStyle,
+                                ),
+                                color: Colors.white,
+                                fontSize: 18.0,
+                                letterSpacing: 0.0,
+                                fontWeight: FlutterFlowTheme.of(context)
+                                    .headlineMedium
+                                    .fontWeight,
+                                fontStyle: FlutterFlowTheme.of(context)
+                                    .headlineMedium
+                                    .fontStyle,
+                              ),
+                    ),
+                  ),
+                  InkWell(
+                    splashColor: Colors.transparent,
+                    focusColor: Colors.transparent,
+                    hoverColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    onTap: () async {
+                      await _model.listViewController?.animateTo(
+                        _model.listViewController!.position.maxScrollExtent,
                         duration: Duration(milliseconds: 100),
                         curve: Curves.ease,
                       );
@@ -296,8 +296,48 @@ class _SingleChatRoomPageWidgetState extends State<SingleChatRoomPageWidget> {
                     color: FlutterFlowTheme.of(context).secondaryBackground,
                     size: 30.0,
                   ),
-                  onPressed: () {
-                    print('IconButton pressed ...');
+                  onPressed: () async {
+                    var messageRecordReference = MessageRecord.createDoc(
+                        FFAppState().workFollowUpGroupRef!);
+                    await messageRecordReference.set({
+                      ...createMessageRecordData(
+                        messageType: 'text',
+                        messageText:
+                            'ตรวจสอบข้อมูลไม่สำเร็จ (KBank)ระบบ : ศรีสวัสดิ์ ประกันทันใจวัน/เวลาที่ส่งข้อความ : 27/03/2026 15:09:46Ref1 : 39758620260130140942Ref2 : 0010220260105472Biller ID : 98200Sender Bank : KBankTransaction ID : 98200270320261509463166799จำนวนเงิน : 1,590.00ResponseCode : 0003ResponseDescription : Payment time expiredรายละเอียดเพิ่มเติมชื่อลูกค้า : นางนางแสงจันทร์ สีพั่วเบอร์โทรลูกค้า : 0656245949สาขา : กุฉินารายณ์ตรงข้ามบิ๊กซีบริษัท : ประกันภัย-เมืองไทยต้องชำระเงินภายในวัน/เวลา : 30/01/2026 (18:24:57)',
+                        senderType: 'system',
+                      ),
+                      ...mapToFirestore(
+                        {
+                          'time': FieldValue.serverTimestamp(),
+                        },
+                      ),
+                    });
+                    _model.createInitialMessageDoc2 =
+                        MessageRecord.getDocumentFromData({
+                      ...createMessageRecordData(
+                        messageType: 'text',
+                        messageText:
+                            'ตรวจสอบข้อมูลไม่สำเร็จ (KBank)ระบบ : ศรีสวัสดิ์ ประกันทันใจวัน/เวลาที่ส่งข้อความ : 27/03/2026 15:09:46Ref1 : 39758620260130140942Ref2 : 0010220260105472Biller ID : 98200Sender Bank : KBankTransaction ID : 98200270320261509463166799จำนวนเงิน : 1,590.00ResponseCode : 0003ResponseDescription : Payment time expiredรายละเอียดเพิ่มเติมชื่อลูกค้า : นางนางแสงจันทร์ สีพั่วเบอร์โทรลูกค้า : 0656245949สาขา : กุฉินารายณ์ตรงข้ามบิ๊กซีบริษัท : ประกันภัย-เมืองไทยต้องชำระเงินภายในวัน/เวลา : 30/01/2026 (18:24:57)',
+                        senderType: 'system',
+                      ),
+                      ...mapToFirestore(
+                        {
+                          'time': DateTime.now(),
+                        },
+                      ),
+                    }, messageRecordReference);
+
+                    await FFAppState()
+                        .workFollowUpGroupRef!
+                        .update(createWorkFollowUpChatRoomRecordData(
+                          lastMessage:
+                              _model.createInitialMessageDoc2?.messageText,
+                          lastMessageBy: 'น้องทันใจ',
+                          lastMessageTime:
+                              _model.createInitialMessageDoc2?.time,
+                        ));
+
+                    safeSetState(() {});
                   },
                 ),
               ],
@@ -310,14 +350,15 @@ class _SingleChatRoomPageWidgetState extends State<SingleChatRoomPageWidget> {
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  if ((singleChatRoomPageSawadChatRoomRecord != null) && true)
+                  if ((workFollowUpGroupPageWorkFollowUpChatRoomRecord !=
+                          null) &&
+                      true)
                     Expanded(
-                      child: StreamBuilder<List<ChatMessagesRecord>>(
-                        stream: queryChatMessagesRecord(
-                          parent: widget.chatRoomDocRef,
-                          queryBuilder: (chatMessagesRecord) =>
-                              chatMessagesRecord.orderBy('message_time',
-                                  descending: true),
+                      child: StreamBuilder<List<MessageRecord>>(
+                        stream: queryMessageRecord(
+                          parent: FFAppState().workFollowUpGroupRef,
+                          queryBuilder: (messageRecord) =>
+                              messageRecord.orderBy('time', descending: true),
                         ),
                         builder: (context, snapshot) {
                           // Customize what your widget looks like when it's loading.
@@ -334,9 +375,9 @@ class _SingleChatRoomPageWidgetState extends State<SingleChatRoomPageWidget> {
                               ),
                             );
                           }
-                          List<ChatMessagesRecord>
-                              listViewChatMessagesRecordList = snapshot.data!;
-                          if (listViewChatMessagesRecordList.isEmpty) {
+                          List<MessageRecord> listViewMessageRecordList =
+                              snapshot.data!;
+                          if (listViewMessageRecordList.isEmpty) {
                             return Center(
                               child: EmptyChatComponentWidget(),
                             );
@@ -352,28 +393,28 @@ class _SingleChatRoomPageWidgetState extends State<SingleChatRoomPageWidget> {
                             reverse: true,
                             shrinkWrap: true,
                             scrollDirection: Axis.vertical,
-                            itemCount: listViewChatMessagesRecordList.length,
+                            itemCount: listViewMessageRecordList.length,
                             separatorBuilder: (_, __) => SizedBox(height: 8.0),
                             itemBuilder: (context, listViewIndex) {
-                              final listViewChatMessagesRecord =
-                                  listViewChatMessagesRecordList[listViewIndex];
+                              final listViewMessageRecord =
+                                  listViewMessageRecordList[listViewIndex];
                               return wrapWithModel(
-                                model:
-                                    _model.chatMessageComponentModels.getModel(
+                                model: _model.workFollowUpMessageComponentModels
+                                    .getModel(
                                   listViewIndex.toString(),
                                   listViewIndex,
                                 ),
                                 updateCallback: () => safeSetState(() {}),
-                                child: ChatMessageComponentWidget(
+                                child: WorkFollowUpMessageComponentWidget(
                                   key: Key(
-                                    'Keyuxp_${listViewIndex.toString()}',
+                                    'Key2ud_${listViewIndex.toString()}',
                                   ),
                                   index: listViewIndex,
                                   isSendMessageSuccess:
                                       _model.isSendMessageSuccess,
                                   thisChatIsVisibleList:
                                       _model.timeChatIsVisibleList,
-                                  messageDocData: listViewChatMessagesRecord,
+                                  messageDocData: listViewMessageRecord,
                                   updateThisChatIsVisibleList:
                                       (boolValue) async {
                                     _model.updateTimeChatIsVisibleListAtIndex(
@@ -385,66 +426,7 @@ class _SingleChatRoomPageWidgetState extends State<SingleChatRoomPageWidget> {
                                 ),
                               );
                             },
-                            controller: _model.listViewController1,
-                          );
-                        },
-                      ),
-                    ),
-                  if (false)
-                    Expanded(
-                      child: StreamBuilder<List<ChatMessagesRecord>>(
-                        stream: queryChatMessagesRecord(
-                          parent: widget.chatRoomDocRef,
-                          queryBuilder: (chatMessagesRecord) =>
-                              chatMessagesRecord.orderBy('message_time',
-                                  descending: true),
-                        ),
-                        builder: (context, snapshot) {
-                          // Customize what your widget looks like when it's loading.
-                          if (!snapshot.hasData) {
-                            return Center(
-                              child: SizedBox(
-                                width: 50.0,
-                                height: 50.0,
-                                child: CircularProgressIndicator(
-                                  valueColor: AlwaysStoppedAnimation<Color>(
-                                    FlutterFlowTheme.of(context).primary,
-                                  ),
-                                ),
-                              ),
-                            );
-                          }
-                          List<ChatMessagesRecord>
-                              listViewChatMessagesRecordList = snapshot.data!;
-                          if (listViewChatMessagesRecordList.isEmpty) {
-                            return Center(
-                              child: EmptyChatComponentWidget(),
-                            );
-                          }
-
-                          return ListView.separated(
-                            padding: EdgeInsets.fromLTRB(
-                              0,
-                              12.0,
-                              0,
-                              12.0,
-                            ),
-                            reverse: true,
-                            shrinkWrap: true,
-                            scrollDirection: Axis.vertical,
-                            itemCount: listViewChatMessagesRecordList.length,
-                            separatorBuilder: (_, __) => SizedBox(height: 8.0),
-                            itemBuilder: (context, listViewIndex) {
-                              final listViewChatMessagesRecord =
-                                  listViewChatMessagesRecordList[listViewIndex];
-                              return TestComponentWidget(
-                                key: Key(
-                                    'Keyqv1_${listViewIndex}_of_${listViewChatMessagesRecordList.length}'),
-                                message: listViewChatMessagesRecord.messageText,
-                                index: listViewIndex,
-                              );
-                            },
-                            controller: _model.listViewController2,
+                            controller: _model.listViewController,
                           );
                         },
                       ),
@@ -491,7 +473,7 @@ class _SingleChatRoomPageWidgetState extends State<SingleChatRoomPageWidget> {
                                                 validateFileFormat(
                                                     m.storagePath, context))) {
                                           safeSetState(() => _model
-                                                  .isDataUploading_uploadDataKh5Camera =
+                                                  .isDataUploading_uploadDataKh5CameraWorkFollowUp =
                                               true);
                                           var selectedUploadedFiles =
                                               <FFUploadedFile>[];
@@ -514,13 +496,13 @@ class _SingleChatRoomPageWidgetState extends State<SingleChatRoomPageWidget> {
                                                         ))
                                                     .toList();
                                           } finally {
-                                            _model.isDataUploading_uploadDataKh5Camera =
+                                            _model.isDataUploading_uploadDataKh5CameraWorkFollowUp =
                                                 false;
                                           }
                                           if (selectedUploadedFiles.length ==
                                               selectedMedia.length) {
                                             safeSetState(() {
-                                              _model.uploadedLocalFile_uploadDataKh5Camera =
+                                              _model.uploadedLocalFile_uploadDataKh5CameraWorkFollowUp =
                                                   selectedUploadedFiles.first;
                                             });
                                           } else {
@@ -529,7 +511,7 @@ class _SingleChatRoomPageWidgetState extends State<SingleChatRoomPageWidget> {
                                           }
                                         }
 
-                                        if (!((_model.uploadedLocalFile_uploadDataKh5Camera
+                                        if (!((_model.uploadedLocalFile_uploadDataKh5CameraWorkFollowUp
                                                     .bytes?.isNotEmpty ??
                                                 false))) {
                                           if (_shouldSetState)
@@ -539,68 +521,12 @@ class _SingleChatRoomPageWidgetState extends State<SingleChatRoomPageWidget> {
                                         _model.isSendMessageSuccess = false;
                                         safeSetState(() {});
                                         _model.imageUploadTemp = _model
-                                            .uploadedLocalFile_uploadDataKh5Camera;
+                                            .uploadedLocalFile_uploadDataKh5CameraWorkFollowUp;
                                         safeSetState(() {});
-
-                                        var chatMessagesRecordReference =
-                                            ChatMessagesRecord.createDoc(
-                                                widget.chatRoomDocRef!);
-                                        await chatMessagesRecordReference.set({
-                                          ...createChatMessagesRecordData(
-                                            messageBy: FFAppState().userDocRef,
-                                            messageByEmployeeId: FFAppState()
-                                                .userProfileData
-                                                .employeeId,
-                                            messageType: 'image',
-                                            messageByDisplayUrl: FFAppState()
-                                                .userProfileData
-                                                .imgProfile,
-                                            messageByName:
-                                                FFAppState().profileFullName,
-                                            messageImageBlurHash:
-                                                valueOrDefault<String>(
-                                              _model.imageUploadTemp?.blurHash,
-                                              'LKOp[Mof~qof?bfQRjfQ%MfQIUfQ',
-                                            ),
-                                          ),
-                                          ...mapToFirestore(
-                                            {
-                                              'message_time':
-                                                  FieldValue.serverTimestamp(),
-                                            },
-                                          ),
-                                        });
-                                        _model.createImageMessageDoc1Camera =
-                                            ChatMessagesRecord
-                                                .getDocumentFromData({
-                                          ...createChatMessagesRecordData(
-                                            messageBy: FFAppState().userDocRef,
-                                            messageByEmployeeId: FFAppState()
-                                                .userProfileData
-                                                .employeeId,
-                                            messageType: 'image',
-                                            messageByDisplayUrl: FFAppState()
-                                                .userProfileData
-                                                .imgProfile,
-                                            messageByName:
-                                                FFAppState().profileFullName,
-                                            messageImageBlurHash:
-                                                valueOrDefault<String>(
-                                              _model.imageUploadTemp?.blurHash,
-                                              'LKOp[Mof~qof?bfQRjfQ%MfQIUfQ',
-                                            ),
-                                          ),
-                                          ...mapToFirestore(
-                                            {
-                                              'message_time': DateTime.now(),
-                                            },
-                                          ),
-                                        }, chatMessagesRecordReference);
-                                        _shouldSetState = true;
                                         safeSetState(() {
-                                          _model.isDataUploading_uploadDataKh5Camera =
+                                          _model.isDataUploading_uploadDataKh5CameraWorkFollowUp =
                                               false;
-                                          _model.uploadedLocalFile_uploadDataKh5Camera =
+                                          _model.uploadedLocalFile_uploadDataKh5CameraWorkFollowUp =
                                               FFUploadedFile(
                                                   bytes: Uint8List.fromList([]),
                                                   originalFilename: '');
@@ -609,48 +535,10 @@ class _SingleChatRoomPageWidgetState extends State<SingleChatRoomPageWidget> {
                                         _model.uploadImageToStorageCamera =
                                             await actions
                                                 .uploadFileFirebaseStorage(
-                                          'SawadChatImg',
+                                          'WorkFollowUpUpload/docref',
                                           _model.imageUploadTemp,
                                         );
                                         _shouldSetState = true;
-
-                                        await _model
-                                            .createImageMessageDoc1Camera!
-                                            .reference
-                                            .update(
-                                                createChatMessagesRecordData(
-                                          messageImageUrl:
-                                              functions.stringToImgPath(_model
-                                                  .uploadImageToStorageCamera),
-                                        ));
-
-                                        await singleChatRoomPageSawadChatRoomRecord
-                                            .reference
-                                            .update({
-                                          ...createSawadChatRoomRecordData(
-                                            lastMessageText:
-                                                '${FFAppState().profileFullName} ส่งรูปภาพ',
-                                            lastMessageTime: _model
-                                                .createImageMessageDoc1Camera
-                                                ?.messageTime,
-                                            lastMessageBy: _model
-                                                .createImageMessageDoc1Camera
-                                                ?.messageBy,
-                                            lastMessageByEmployeeId: _model
-                                                .createImageMessageDoc1Camera
-                                                ?.messageByEmployeeId,
-                                            lastMessageType: _model
-                                                .createImageMessageDoc1Camera
-                                                ?.messageType,
-                                          ),
-                                          ...mapToFirestore(
-                                            {
-                                              'last_seen_users_ref':
-                                                  functions.generateUserRefList(
-                                                      FFAppState().userDocRef),
-                                            },
-                                          ),
-                                        });
                                         _model.isSendMessageSuccess = true;
                                         safeSetState(() {});
                                         _model.imageUploadTemp = null;
@@ -686,7 +574,7 @@ class _SingleChatRoomPageWidgetState extends State<SingleChatRoomPageWidget> {
                                                 validateFileFormat(
                                                     m.storagePath, context))) {
                                           safeSetState(() => _model
-                                                  .isDataUploading_uploadDataKh5 =
+                                                  .isDataUploading_uploadDataKh5WorkFollowUp =
                                               true);
                                           var selectedUploadedFiles =
                                               <FFUploadedFile>[];
@@ -709,13 +597,13 @@ class _SingleChatRoomPageWidgetState extends State<SingleChatRoomPageWidget> {
                                                         ))
                                                     .toList();
                                           } finally {
-                                            _model.isDataUploading_uploadDataKh5 =
+                                            _model.isDataUploading_uploadDataKh5WorkFollowUp =
                                                 false;
                                           }
                                           if (selectedUploadedFiles.length ==
                                               selectedMedia.length) {
                                             safeSetState(() {
-                                              _model.uploadedLocalFile_uploadDataKh5 =
+                                              _model.uploadedLocalFile_uploadDataKh5WorkFollowUp =
                                                   selectedUploadedFiles.first;
                                             });
                                           } else {
@@ -724,7 +612,7 @@ class _SingleChatRoomPageWidgetState extends State<SingleChatRoomPageWidget> {
                                           }
                                         }
 
-                                        if (!((_model.uploadedLocalFile_uploadDataKh5
+                                        if (!((_model.uploadedLocalFile_uploadDataKh5WorkFollowUp
                                                     .bytes?.isNotEmpty ??
                                                 false))) {
                                           if (_shouldSetState)
@@ -734,68 +622,12 @@ class _SingleChatRoomPageWidgetState extends State<SingleChatRoomPageWidget> {
                                         _model.isSendMessageSuccess = false;
                                         safeSetState(() {});
                                         _model.imageUploadTemp = _model
-                                            .uploadedLocalFile_uploadDataKh5;
+                                            .uploadedLocalFile_uploadDataKh5WorkFollowUp;
                                         safeSetState(() {});
-
-                                        var chatMessagesRecordReference =
-                                            ChatMessagesRecord.createDoc(
-                                                widget.chatRoomDocRef!);
-                                        await chatMessagesRecordReference.set({
-                                          ...createChatMessagesRecordData(
-                                            messageBy: FFAppState().userDocRef,
-                                            messageByEmployeeId: FFAppState()
-                                                .userProfileData
-                                                .employeeId,
-                                            messageType: 'image',
-                                            messageByDisplayUrl: FFAppState()
-                                                .userProfileData
-                                                .imgProfile,
-                                            messageByName:
-                                                FFAppState().profileFullName,
-                                            messageImageBlurHash:
-                                                valueOrDefault<String>(
-                                              _model.imageUploadTemp?.blurHash,
-                                              'LKOp[Mof~qof?bfQRjfQ%MfQIUfQ',
-                                            ),
-                                          ),
-                                          ...mapToFirestore(
-                                            {
-                                              'message_time':
-                                                  FieldValue.serverTimestamp(),
-                                            },
-                                          ),
-                                        });
-                                        _model.createImageMessageDoc1 =
-                                            ChatMessagesRecord
-                                                .getDocumentFromData({
-                                          ...createChatMessagesRecordData(
-                                            messageBy: FFAppState().userDocRef,
-                                            messageByEmployeeId: FFAppState()
-                                                .userProfileData
-                                                .employeeId,
-                                            messageType: 'image',
-                                            messageByDisplayUrl: FFAppState()
-                                                .userProfileData
-                                                .imgProfile,
-                                            messageByName:
-                                                FFAppState().profileFullName,
-                                            messageImageBlurHash:
-                                                valueOrDefault<String>(
-                                              _model.imageUploadTemp?.blurHash,
-                                              'LKOp[Mof~qof?bfQRjfQ%MfQIUfQ',
-                                            ),
-                                          ),
-                                          ...mapToFirestore(
-                                            {
-                                              'message_time': DateTime.now(),
-                                            },
-                                          ),
-                                        }, chatMessagesRecordReference);
-                                        _shouldSetState = true;
                                         safeSetState(() {
-                                          _model.isDataUploading_uploadDataKh5 =
+                                          _model.isDataUploading_uploadDataKh5WorkFollowUp =
                                               false;
-                                          _model.uploadedLocalFile_uploadDataKh5 =
+                                          _model.uploadedLocalFile_uploadDataKh5WorkFollowUp =
                                               FFUploadedFile(
                                                   bytes: Uint8List.fromList([]),
                                                   originalFilename: '');
@@ -804,47 +636,10 @@ class _SingleChatRoomPageWidgetState extends State<SingleChatRoomPageWidget> {
                                         _model.uploadImageToStorage =
                                             await actions
                                                 .uploadFileFirebaseStorage(
-                                          'SawadChatImg',
+                                          'WorkFollowUpUpload/docref',
                                           _model.imageUploadTemp,
                                         );
                                         _shouldSetState = true;
-
-                                        await _model
-                                            .createImageMessageDoc1!.reference
-                                            .update(
-                                                createChatMessagesRecordData(
-                                          messageImageUrl:
-                                              functions.stringToImgPath(
-                                                  _model.uploadImageToStorage),
-                                        ));
-
-                                        await singleChatRoomPageSawadChatRoomRecord
-                                            .reference
-                                            .update({
-                                          ...createSawadChatRoomRecordData(
-                                            lastMessageText:
-                                                '${FFAppState().profileFullName} ส่งรูปภาพ',
-                                            lastMessageTime: _model
-                                                .createImageMessageDoc1
-                                                ?.messageTime,
-                                            lastMessageBy: _model
-                                                .createImageMessageDoc1
-                                                ?.messageBy,
-                                            lastMessageByEmployeeId: _model
-                                                .createImageMessageDoc1
-                                                ?.messageByEmployeeId,
-                                            lastMessageType: _model
-                                                .createImageMessageDoc1
-                                                ?.messageType,
-                                          ),
-                                          ...mapToFirestore(
-                                            {
-                                              'last_seen_users_ref':
-                                                  functions.generateUserRefList(
-                                                      FFAppState().userDocRef),
-                                            },
-                                          ),
-                                        });
                                         _model.isSendMessageSuccess = true;
                                         safeSetState(() {});
                                         _model.imageUploadTemp = null;
@@ -1109,80 +904,72 @@ class _SingleChatRoomPageWidgetState extends State<SingleChatRoomPageWidget> {
                                           _model.textController?.clear();
                                         });
 
-                                        var chatMessagesRecordReference =
-                                            ChatMessagesRecord.createDoc(
-                                                widget.chatRoomDocRef!);
-                                        await chatMessagesRecordReference.set({
-                                          ...createChatMessagesRecordData(
-                                            messageBy: FFAppState().userDocRef,
-                                            messageByEmployeeId: FFAppState()
-                                                .userProfileData
-                                                .employeeId,
-                                            messageText:
-                                                _model.chatMessagesTemp,
+                                        var messageRecordReference =
+                                            MessageRecord.createDoc(FFAppState()
+                                                .workFollowUpGroupRef!);
+                                        await messageRecordReference.set({
+                                          ...createMessageRecordData(
                                             messageType: 'text',
-                                            messageByDisplayUrl: FFAppState()
-                                                .userProfileData
-                                                .imgProfile,
-                                            messageByName:
-                                                FFAppState().profileFullName,
+                                            messageText:
+                                                '${_model.textController.text}',
+                                            userLevel:
+                                                '${FFAppState().profileApiData.level}',
+                                            userBranchCode:
+                                                '${FFAppState().profileApiData.branch}',
+                                            userBranchName:
+                                                '${FFAppState().profileApiData.department}',
+                                            isReply: false,
+                                            senderType: 'normal',
+                                            userEmployeeId:
+                                                '${FFAppState().profileApiData.empCode}',
+                                            userName:
+                                                '${FFAppState().profileApiData.fullName}',
                                           ),
                                           ...mapToFirestore(
                                             {
-                                              'message_time':
+                                              'time':
                                                   FieldValue.serverTimestamp(),
                                             },
                                           ),
                                         });
                                         _model.createMessageDoc2 =
-                                            ChatMessagesRecord
-                                                .getDocumentFromData({
-                                          ...createChatMessagesRecordData(
-                                            messageBy: FFAppState().userDocRef,
-                                            messageByEmployeeId: FFAppState()
-                                                .userProfileData
-                                                .employeeId,
-                                            messageText:
-                                                _model.chatMessagesTemp,
+                                            MessageRecord.getDocumentFromData({
+                                          ...createMessageRecordData(
                                             messageType: 'text',
-                                            messageByDisplayUrl: FFAppState()
-                                                .userProfileData
-                                                .imgProfile,
-                                            messageByName:
-                                                FFAppState().profileFullName,
+                                            messageText:
+                                                '${_model.textController.text}',
+                                            userLevel:
+                                                '${FFAppState().profileApiData.level}',
+                                            userBranchCode:
+                                                '${FFAppState().profileApiData.branch}',
+                                            userBranchName:
+                                                '${FFAppState().profileApiData.department}',
+                                            isReply: false,
+                                            senderType: 'normal',
+                                            userEmployeeId:
+                                                '${FFAppState().profileApiData.empCode}',
+                                            userName:
+                                                '${FFAppState().profileApiData.fullName}',
                                           ),
                                           ...mapToFirestore(
                                             {
-                                              'message_time': DateTime.now(),
+                                              'time': DateTime.now(),
                                             },
                                           ),
-                                        }, chatMessagesRecordReference);
+                                        }, messageRecordReference);
                                         _shouldSetState = true;
 
-                                        await singleChatRoomPageSawadChatRoomRecord
+                                        await workFollowUpGroupPageWorkFollowUpChatRoomRecord
                                             .reference
-                                            .update({
-                                          ...createSawadChatRoomRecordData(
-                                            lastMessageText: _model
-                                                .createMessageDoc2?.messageText,
-                                            lastMessageTime: _model
-                                                .createMessageDoc2?.messageTime,
-                                            lastMessageBy: _model
-                                                .createMessageDoc2?.messageBy,
-                                            lastMessageByEmployeeId: _model
-                                                .createMessageDoc2
-                                                ?.messageByEmployeeId,
-                                            lastMessageType: _model
-                                                .createMessageDoc2?.messageType,
-                                          ),
-                                          ...mapToFirestore(
-                                            {
-                                              'last_seen_users_ref':
-                                                  functions.generateUserRefList(
-                                                      FFAppState().userDocRef),
-                                            },
-                                          ),
-                                        });
+                                            .update(
+                                                createWorkFollowUpChatRoomRecordData(
+                                          lastMessage: _model
+                                              .createMessageDoc2?.messageText,
+                                          lastMessageTime:
+                                              _model.createMessageDoc2?.time,
+                                          lastMessageBy: _model
+                                              .createMessageDoc2?.userName,
+                                        ));
                                         _model.isSendMessageSuccess = true;
                                         _model.chatMessagesTemp = null;
                                         safeSetState(() {});

@@ -23,6 +23,46 @@ Future setInitialParamAction() async {
         FirebaseFirestore.instance.doc('${uri.queryParameters['userDocRef']}');
     FFAppState().profileFullName = '${uri.queryParameters['profileFullName']}';
     print('${FFAppState().userDocRef}');
+    FFAppState().accessToken = '${uri.queryParameters['token']}';
+
+    print(FFAppState().accessToken);
+
+    UserCustomRecord? queryUserDocData =
+        await UserCustomRecord.getDocumentOnce(FFAppState().userDocRef!);
+    FFAppState().userProfileData = UserProfileDataModelStruct(
+      createdTime: queryUserDocData?.createdTime,
+      email: queryUserDocData?.email,
+      uid: queryUserDocData?.uid,
+      imgProfile: queryUserDocData?.imgProfile,
+      employeeId: queryUserDocData?.employeeId,
+      fcmToken:
+          queryUserDocData!.hasFcmToken() ? queryUserDocData?.fcmToken : '',
+      imgProfileBlurHash: queryUserDocData!.hasImgProfileBlurHash()
+          ? queryUserDocData?.imgProfileBlurHash
+          : '',
+      fullName: FFAppState().profileFullName,
+    );
+    print('${FFAppState().userProfileData.employeeId}');
+
+    return;
+  }
+  if ('${uri.queryParameters['chatDocRef']}' != '' &&
+      '${uri.queryParameters['chatDocRef']}' != 'null') {
+    FFAppState().workFollowUpGroupRef =
+        FirebaseFirestore.instance.doc('${uri.queryParameters['chatDocRef']}');
+    print('${FFAppState().workFollowUpGroupRef}');
+    FFAppState().accessToken = '${uri.queryParameters['token']}';
+    print('${FFAppState().accessToken}');
+    ApiCallResponse? getUserProfile = await GetUserProfileAPICall.call(
+      token: FFAppState().accessToken,
+      apiUrl: 'https://prd-proxy.swpfin.com:8096',
+      projectName: 'SSW_ARUNSAWAD_API',
+    );
+
+    FFAppState().profileApiData = GetUserProfileAPICall.dataJson(
+      (getUserProfile?.jsonBody ?? ''),
+    )!;
+
     return;
   }
 

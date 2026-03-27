@@ -14,7 +14,6 @@ import '/backend/schema/structs/index.dart';
 import '/auth/firebase_auth/auth_util.dart';
 
 String? stringToImgPath(String? stringImageLink) {
-  print('');
   return stringImageLink!;
 }
 
@@ -32,7 +31,7 @@ bool? checkContainsChatRoom(
   List<dynamic> usersEmployeeIdList = [];
 
   for (int i = 0; i < inputChatRoomDocList!.length; i++) {
-    usersEmployeeIdList.add(inputChatRoomDocList![i].usersEmployeeIdList);
+    usersEmployeeIdList.add(inputChatRoomDocList![i].usersEmployeeId);
   }
 
   final listEquality = const ListEquality();
@@ -47,4 +46,28 @@ bool? checkContainsChatRoom(
   } else {
     return false;
   }
+}
+
+List<String>? reverseList(List<String>? somethingList) {
+  return somethingList!.reversed.toList();
+}
+
+List<DocumentReference>? generateUserRefChatRoom(
+  DocumentReference? myUserDocRef,
+  DocumentReference? targetUserDocRef,
+) {
+  List<DocumentReference> userDocRefListOutput = [
+    myUserDocRef!,
+    targetUserDocRef!
+  ];
+
+  return userDocRefListOutput;
+}
+
+List<String>? listStringToImgPathList(List<String>? somethingList) {
+  return somethingList!;
+}
+
+String? imgPathtoString(String? imgPath) {
+  return "${imgPath!}";
 }

@@ -49,4 +49,40 @@ class FFAppState extends ChangeNotifier {
   set profileFullName(String value) {
     _profileFullName = value;
   }
+
+  dynamic _myListViewController;
+  dynamic get myListViewController => _myListViewController;
+  set myListViewController(dynamic value) {
+    _myListViewController = value;
+  }
+
+  bool _myListViewControllerReset = false;
+  bool get myListViewControllerReset => _myListViewControllerReset;
+  set myListViewControllerReset(bool value) {
+    _myListViewControllerReset = value;
+  }
+
+  double _listViewItemHeight = 0.0;
+  double get listViewItemHeight => _listViewItemHeight;
+  set listViewItemHeight(double value) {
+    _listViewItemHeight = value;
+  }
+
+  DocumentReference? _workFollowUpGroupRef;
+  DocumentReference? get workFollowUpGroupRef => _workFollowUpGroupRef;
+  set workFollowUpGroupRef(DocumentReference? value) {
+    _workFollowUpGroupRef = value;
+  }
+
+  UserProfileApiDataModelStruct _profileApiData =
+      UserProfileApiDataModelStruct();
+  UserProfileApiDataModelStruct get profileApiData => _profileApiData;
+  set profileApiData(UserProfileApiDataModelStruct value) {
+    _profileApiData = value;
+  }
+
+  void updateProfileApiDataStruct(
+      Function(UserProfileApiDataModelStruct) updateFn) {
+    updateFn(_profileApiData);
+  }
 }

@@ -93,6 +93,12 @@ class GetUserProfileAPICall {
       alwaysAllowBody: false,
     );
   }
+
+  static UserProfileApiDataModelStruct? dataJson(dynamic response) =>
+      UserProfileApiDataModelStruct.maybeFromMap(getJsonField(
+        response,
+        r'''$.DataUserInfo[0]''',
+      ));
 }
 
 class ApiPagingParams {

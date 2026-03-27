@@ -9,33 +9,35 @@ import 'package:flutter_blurhash/flutter_blurhash.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:octo_image/octo_image.dart';
 import 'package:provider/provider.dart';
-import 'home_page_model.dart';
-export 'home_page_model.dart';
+import 'work_follow_up_home_page_model.dart';
+export 'work_follow_up_home_page_model.dart';
 
-class HomePageWidget extends StatefulWidget {
-  const HomePageWidget({
+class WorkFollowUpHomePageWidget extends StatefulWidget {
+  const WorkFollowUpHomePageWidget({
     super.key,
     String? userDocRef,
   }) : this.userDocRef = userDocRef ?? '-';
 
   final String userDocRef;
 
-  static String routeName = 'HomePage';
-  static String routePath = '/homePage';
+  static String routeName = 'WorkFollowUpHomePage';
+  static String routePath = '/workFollowUpHomePage';
 
   @override
-  State<HomePageWidget> createState() => _HomePageWidgetState();
+  State<WorkFollowUpHomePageWidget> createState() =>
+      _WorkFollowUpHomePageWidgetState();
 }
 
-class _HomePageWidgetState extends State<HomePageWidget> {
-  late HomePageModel _model;
+class _WorkFollowUpHomePageWidgetState
+    extends State<WorkFollowUpHomePageWidget> {
+  late WorkFollowUpHomePageModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => HomePageModel());
+    _model = createModel(context, () => WorkFollowUpHomePageModel());
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
@@ -77,7 +79,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
           );
         }
 
-        final homePageUserCustomRecord = snapshot.data!;
+        final workFollowUpHomePageUserCustomRecord = snapshot.data!;
 
         return GestureDetector(
           onTap: () {
@@ -96,7 +98,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                 size: 30.0,
               ),
               title: Text(
-                'SAWAD Chat${FFDevEnvironmentValues().isProduction ? '' : ' (UAT V.${FFDevEnvironmentValues().version.toString()})'}',
+                'กลุ่มแจ้งงาน',
                 style: FlutterFlowTheme.of(context).headlineMedium.override(
                       font: GoogleFonts.interTight(
                         fontWeight: FlutterFlowTheme.of(context)

@@ -117,6 +117,31 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: PersonSelectingPageWidget.routeName,
           path: PersonSelectingPageWidget.routePath,
           builder: (context, params) => PersonSelectingPageWidget(),
+        ),
+        FFRoute(
+          name: ChatSocketWidget.routeName,
+          path: ChatSocketWidget.routePath,
+          builder: (context, params) => ChatSocketWidget(),
+        ),
+        FFRoute(
+          name: GroupChatCreatePageWidget.routeName,
+          path: GroupChatCreatePageWidget.routePath,
+          builder: (context, params) => GroupChatCreatePageWidget(),
+        ),
+        FFRoute(
+          name: WorkFollowUpGroupPageWidget.routeName,
+          path: WorkFollowUpGroupPageWidget.routePath,
+          builder: (context, params) => WorkFollowUpGroupPageWidget(),
+        ),
+        FFRoute(
+          name: WorkFollowUpHomePageWidget.routeName,
+          path: WorkFollowUpHomePageWidget.routePath,
+          builder: (context, params) => WorkFollowUpHomePageWidget(
+            userDocRef: params.getParam(
+              'userDocRef',
+              ParamType.String,
+            ),
+          ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

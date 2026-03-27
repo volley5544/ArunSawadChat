@@ -1,6 +1,8 @@
 export '/backend/schema/util/schema_util.dart';
 
 export 'age_struct.dart';
+export 'chat_member_data_model_struct.dart';
+export 'chat_room_data_model_struct.dart';
 export 'employee_data_model_struct.dart';
 export 'head_of_work_struct.dart';
 export 'position_age_struct.dart';

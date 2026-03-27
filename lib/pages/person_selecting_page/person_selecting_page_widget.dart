@@ -4,6 +4,8 @@ import '/components/empty_chat_component_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/custom_functions.dart' as functions;
+import '/index.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -380,7 +382,7 @@ class _PersonSelectingPageWidgetState extends State<PersonSelectingPageWidget> {
 
                             return Container(
                               width: double.infinity,
-                              height: 80.0,
+                              height: 90.0,
                               decoration: BoxDecoration(),
                               child: Visibility(
                                 visible: containerUserCustomRecordList
@@ -474,13 +476,235 @@ class _PersonSelectingPageWidgetState extends State<PersonSelectingPageWidget> {
                                                   ),
                                         );
                                         _shouldSetState = true;
+                                        _model.chatRoomDocList = _model
+                                            .queryMyChatRoom!
+                                            .where((e) => e.usersRef.contains(
+                                                containerUserCustomRecordList
+                                                    .elementAtOrNull(
+                                                        employeeListItemIndex)
+                                                    ?.reference))
+                                            .toList()
+                                            .cast<SawadChatRoomRecord>();
+                                        safeSetState(() {});
+                                        if (_model.chatRoomDocList.length ==
+                                            1) {
+                                          Navigator.pop(context);
+                                          if (Navigator.of(context).canPop()) {
+                                            context.pop();
+                                          }
+                                          context.pushNamed(
+                                            SingleChatRoomPageWidget.routeName,
+                                            queryParameters: {
+                                              'chatRoomDocRef': serializeParam(
+                                                _model.chatRoomDocList
+                                                    .firstOrNull?.reference,
+                                                ParamType.DocumentReference,
+                                              ),
+                                            }.withoutNulls,
+                                            extra: <String, dynamic>{
+                                              '__transition_info__':
+                                                  TransitionInfo(
+                                                hasTransition: true,
+                                                transitionType:
+                                                    PageTransitionType
+                                                        .rightToLeft,
+                                              ),
+                                            },
+                                          );
+
+                                          if (_shouldSetState)
+                                            safeSetState(() {});
+                                          return;
+                                        }
+                                        var confirmDialogResponse =
+                                            await showDialog<bool>(
+                                                  context: context,
+                                                  builder:
+                                                      (alertDialogContext) {
+                                                    return AlertDialog(
+                                                      content: Text(
+                                                          'คุณต้องการจะสร้างห้องสนทนากับ คุณ${employeeListItemItem.fullName} หรือไม่?'),
+                                                      actions: [
+                                                        TextButton(
+                                                          onPressed: () =>
+                                                              Navigator.pop(
+                                                                  alertDialogContext,
+                                                                  false),
+                                                          child: Text('Cancel'),
+                                                        ),
+                                                        TextButton(
+                                                          onPressed: () =>
+                                                              Navigator.pop(
+                                                                  alertDialogContext,
+                                                                  true),
+                                                          child:
+                                                              Text('Confirm'),
+                                                        ),
+                                                      ],
+                                                    );
+                                                  },
+                                                ) ??
+                                                false;
+                                        if (!confirmDialogResponse) {
+                                          Navigator.pop(context);
+                                          if (_shouldSetState)
+                                            safeSetState(() {});
+                                          return;
+                                        }
+
+                                        var sawadChatRoomRecordReference =
+                                            SawadChatRoomRecord.collection
+                                                .doc();
+                                        await sawadChatRoomRecordReference.set({
+                                          ...createSawadChatRoomRecordData(
+                                            lastMessageText: 'เริ่มแชทเลย!',
+                                            lastMessageBy:
+                                                FFAppState().userDocRef,
+                                            lastMessageByEmployeeId:
+                                                FFAppState()
+                                                    .userProfileData
+                                                    .employeeId,
+                                            lastMessageType: 'text',
+                                            chatRoomType: 'single',
+                                          ),
+                                          ...mapToFirestore(
+                                            {
+                                              'users_ref': functions
+                                                  .generateUserRefChatRoom(
+                                                      FFAppState().userDocRef,
+                                                      containerUserCustomRecordList
+                                                          .elementAtOrNull(
+                                                              employeeListItemIndex)
+                                                          ?.reference),
+                                              'last_message_time':
+                                                  FieldValue.serverTimestamp(),
+                                              'users_name': (String myVar,
+                                                      String targetVar) {
+                                                return [myVar, targetVar];
+                                              }(
+                                                  FFAppState().profileFullName,
+                                                  employeeListItemItem
+                                                      .fullName),
+                                              'users_display_image': functions
+                                                  .listStringToImgPathList(((String
+                                                                  myVar,
+                                                              String targetVar) {
+                                                return [myVar, targetVar];
+                                              }(
+                                                          functions.imgPathtoString(
+                                                              FFAppState()
+                                                                  .userProfileData
+                                                                  .imgProfile)!,
+                                                          functions.imgPathtoString(
+                                                              containerUserCustomRecordList
+                                                                  .elementAtOrNull(
+                                                                      employeeListItemIndex)
+                                                                  ?.imgProfile)!))
+                                                      .toList()),
+                                              'users_employee_id':
+                                                  (String myVar,
+                                                          String targetVar) {
+                                                return [myVar, targetVar];
+                                              }(
+                                                      FFAppState()
+                                                          .userProfileData
+                                                          .employeeId,
+                                                      employeeListItemItem
+                                                          .employeeCode),
+                                            },
+                                          ),
+                                        });
+                                        _model.createNewChatRoom =
+                                            SawadChatRoomRecord
+                                                .getDocumentFromData({
+                                          ...createSawadChatRoomRecordData(
+                                            lastMessageText: 'เริ่มแชทเลย!',
+                                            lastMessageBy:
+                                                FFAppState().userDocRef,
+                                            lastMessageByEmployeeId:
+                                                FFAppState()
+                                                    .userProfileData
+                                                    .employeeId,
+                                            lastMessageType: 'text',
+                                            chatRoomType: 'single',
+                                          ),
+                                          ...mapToFirestore(
+                                            {
+                                              'users_ref': functions
+                                                  .generateUserRefChatRoom(
+                                                      FFAppState().userDocRef,
+                                                      containerUserCustomRecordList
+                                                          .elementAtOrNull(
+                                                              employeeListItemIndex)
+                                                          ?.reference),
+                                              'last_message_time':
+                                                  DateTime.now(),
+                                              'users_name': (String myVar,
+                                                      String targetVar) {
+                                                return [myVar, targetVar];
+                                              }(
+                                                  FFAppState().profileFullName,
+                                                  employeeListItemItem
+                                                      .fullName),
+                                              'users_display_image': functions
+                                                  .listStringToImgPathList(((String
+                                                                  myVar,
+                                                              String targetVar) {
+                                                return [myVar, targetVar];
+                                              }(
+                                                          functions.imgPathtoString(
+                                                              FFAppState()
+                                                                  .userProfileData
+                                                                  .imgProfile)!,
+                                                          functions.imgPathtoString(
+                                                              containerUserCustomRecordList
+                                                                  .elementAtOrNull(
+                                                                      employeeListItemIndex)
+                                                                  ?.imgProfile)!))
+                                                      .toList()),
+                                              'users_employee_id':
+                                                  (String myVar,
+                                                          String targetVar) {
+                                                return [myVar, targetVar];
+                                              }(
+                                                      FFAppState()
+                                                          .userProfileData
+                                                          .employeeId,
+                                                      employeeListItemItem
+                                                          .employeeCode),
+                                            },
+                                          ),
+                                        }, sawadChatRoomRecordReference);
+                                        _shouldSetState = true;
                                         Navigator.pop(context);
+                                        if (Navigator.of(context).canPop()) {
+                                          context.pop();
+                                        }
+                                        context.pushNamed(
+                                          SingleChatRoomPageWidget.routeName,
+                                          queryParameters: {
+                                            'chatRoomDocRef': serializeParam(
+                                              _model
+                                                  .createNewChatRoom?.reference,
+                                              ParamType.DocumentReference,
+                                            ),
+                                          }.withoutNulls,
+                                          extra: <String, dynamic>{
+                                            '__transition_info__':
+                                                TransitionInfo(
+                                              hasTransition: true,
+                                              transitionType: PageTransitionType
+                                                  .rightToLeft,
+                                            ),
+                                          },
+                                        );
+
                                         if (_shouldSetState)
                                           safeSetState(() {});
                                       },
                                       child: Container(
                                         width: double.infinity,
-                                        height: 80.0,
+                                        height: 90.0,
                                         decoration: BoxDecoration(
                                           color: FlutterFlowTheme.of(context)
                                               .secondaryBackground,
@@ -509,7 +733,7 @@ class _PersonSelectingPageWidgetState extends State<PersonSelectingPageWidget> {
                                                   mainAxisSize:
                                                       MainAxisSize.max,
                                                   crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
+                                                      CrossAxisAlignment.center,
                                                   children: [
                                                     Container(
                                                       width: 70.0,
@@ -529,19 +753,22 @@ class _PersonSelectingPageWidgetState extends State<PersonSelectingPageWidget> {
                                                               (_) => SizedBox
                                                                   .expand(
                                                             child: Image(
-                                                              image: BlurHashImage(FFAppState()
-                                                                      .userProfileData
+                                                              image: BlurHashImage(containerUserCustomRecordList
+                                                                      .elementAtOrNull(
+                                                                          employeeListItemIndex)!
                                                                       .hasImgProfileBlurHash()
-                                                                  ? FFAppState()
-                                                                      .userProfileData
+                                                                  ? containerUserCustomRecordList
+                                                                      .elementAtOrNull(
+                                                                          employeeListItemIndex)!
                                                                       .imgProfileBlurHash
                                                                   : 'LKOp[Mof~qof?bfQRjfQ%MfQIUfQ'),
                                                               fit: BoxFit.cover,
                                                             ),
                                                           ),
                                                           image: NetworkImage(
-                                                            FFAppState()
-                                                                .userProfileData
+                                                            containerUserCustomRecordList
+                                                                .elementAtOrNull(
+                                                                    employeeListItemIndex)!
                                                                 .imgProfile,
                                                           ),
                                                           width:

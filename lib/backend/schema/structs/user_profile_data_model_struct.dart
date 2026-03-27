@@ -20,6 +20,7 @@ class UserProfileDataModelStruct extends FFFirebaseStruct {
     String? imgProfileBlurHash,
     bool? goldCupConsent,
     DateTime? consentDate,
+    String? fullName,
     FirestoreUtilData firestoreUtilData = const FirestoreUtilData(),
   })  : _createdTime = createdTime,
         _email = email,
@@ -31,6 +32,7 @@ class UserProfileDataModelStruct extends FFFirebaseStruct {
         _imgProfileBlurHash = imgProfileBlurHash,
         _goldCupConsent = goldCupConsent,
         _consentDate = consentDate,
+        _fullName = fullName,
         super(firestoreUtilData);
 
   // "created_time" field.
@@ -107,6 +109,13 @@ class UserProfileDataModelStruct extends FFFirebaseStruct {
 
   bool hasConsentDate() => _consentDate != null;
 
+  // "FullName" field.
+  String? _fullName;
+  String get fullName => _fullName ?? '';
+  set fullName(String? val) => _fullName = val;
+
+  bool hasFullName() => _fullName != null;
+
   static UserProfileDataModelStruct fromMap(Map<String, dynamic> data) =>
       UserProfileDataModelStruct(
         createdTime: data['created_time'] as DateTime?,
@@ -119,6 +128,7 @@ class UserProfileDataModelStruct extends FFFirebaseStruct {
         imgProfileBlurHash: data['img_profile_blur_hash'] as String?,
         goldCupConsent: data['gold_cup_consent'] as bool?,
         consentDate: data['consent_date'] as DateTime?,
+        fullName: data['FullName'] as String?,
       );
 
   static UserProfileDataModelStruct? maybeFromMap(dynamic data) => data is Map
@@ -136,6 +146,7 @@ class UserProfileDataModelStruct extends FFFirebaseStruct {
         'img_profile_blur_hash': _imgProfileBlurHash,
         'gold_cup_consent': _goldCupConsent,
         'consent_date': _consentDate,
+        'FullName': _fullName,
       }.withoutNulls;
 
   @override
@@ -180,6 +191,10 @@ class UserProfileDataModelStruct extends FFFirebaseStruct {
         'consent_date': serializeParam(
           _consentDate,
           ParamType.DateTime,
+        ),
+        'FullName': serializeParam(
+          _fullName,
+          ParamType.String,
         ),
       }.withoutNulls;
 
@@ -237,6 +252,11 @@ class UserProfileDataModelStruct extends FFFirebaseStruct {
           ParamType.DateTime,
           false,
         ),
+        fullName: deserializeParam(
+          data['FullName'],
+          ParamType.String,
+          false,
+        ),
       );
 
   @override
@@ -255,7 +275,8 @@ class UserProfileDataModelStruct extends FFFirebaseStruct {
         listEquality.equals(sawadChatRoomRef, other.sawadChatRoomRef) &&
         imgProfileBlurHash == other.imgProfileBlurHash &&
         goldCupConsent == other.goldCupConsent &&
-        consentDate == other.consentDate;
+        consentDate == other.consentDate &&
+        fullName == other.fullName;
   }
 
   @override
@@ -269,7 +290,8 @@ class UserProfileDataModelStruct extends FFFirebaseStruct {
         sawadChatRoomRef,
         imgProfileBlurHash,
         goldCupConsent,
-        consentDate
+        consentDate,
+        fullName
       ]);
 }
 
@@ -283,6 +305,7 @@ UserProfileDataModelStruct createUserProfileDataModelStruct({
   String? imgProfileBlurHash,
   bool? goldCupConsent,
   DateTime? consentDate,
+  String? fullName,
   Map<String, dynamic> fieldValues = const {},
   bool clearUnsetFields = true,
   bool create = false,
@@ -298,6 +321,7 @@ UserProfileDataModelStruct createUserProfileDataModelStruct({
       imgProfileBlurHash: imgProfileBlurHash,
       goldCupConsent: goldCupConsent,
       consentDate: consentDate,
+      fullName: fullName,
       firestoreUtilData: FirestoreUtilData(
         clearUnsetFields: clearUnsetFields,
         create: create,

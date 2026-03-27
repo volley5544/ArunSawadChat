@@ -26,5 +26,24 @@ service cloud.firestore {
       allow read: if true;
     }
 
+
+    match /WorkFollowUpChatRoom/{document} {
+      allow create: if true;
+      allow read: if true;
+      allow write: if true;
+      allow delete: if true;
+    }
+
+    match /WorkFollowUpChatRoom/{parent}/Message/{document} {
+      allow create: if true;
+      allow read: if true;
+      allow write: if true;
+      allow delete: if true;
+    }
+
+    match /{path=**}/Message/{document} {
+      allow read: if true;
+    }
+
   }
 }

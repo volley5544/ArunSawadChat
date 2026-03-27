@@ -1,11 +1,11 @@
 import '/backend/backend.dart';
-import '/components/chat_message_component_widget.dart';
+import '/components/work_follow_up_message_component_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import 'single_chat_room_page_widget.dart' show SingleChatRoomPageWidget;
+import 'work_follow_up_group_page_widget.dart' show WorkFollowUpGroupPageWidget;
 import 'package:flutter/material.dart';
 
-class SingleChatRoomPageModel
-    extends FlutterFlowModel<SingleChatRoomPageWidget> {
+class WorkFollowUpGroupPageModel
+    extends FlutterFlowModel<WorkFollowUpGroupPageWidget> {
   ///  Local state fields for this page.
 
   List<bool> timeChatIsVisibleList = [];
@@ -41,29 +41,25 @@ class SingleChatRoomPageModel
 
   ///  State fields for stateful widgets in this page.
 
-  // Stores action output result for [Backend Call - Read Document] action in SingleChatRoomPage widget.
-  UserCustomRecord? getUserProfile;
+  // Stores action output result for [Backend Call - Create Document] action in Text widget.
+  MessageRecord? createInitialMessageDoc;
+  // Stores action output result for [Backend Call - Create Document] action in IconButton widget.
+  MessageRecord? createInitialMessageDoc2;
   // State field(s) for ListView widget.
-  ScrollController? listViewController1;
-  // Models for ChatMessageComponent dynamic component.
-  late FlutterFlowDynamicModels<ChatMessageComponentModel>
-      chatMessageComponentModels;
-  // State field(s) for ListView widget.
-  ScrollController? listViewController2;
-  bool isDataUploading_uploadDataKh5Camera = false;
-  FFUploadedFile uploadedLocalFile_uploadDataKh5Camera =
+  ScrollController? listViewController;
+  // Models for WorkFollowUpMessageComponent dynamic component.
+  late FlutterFlowDynamicModels<WorkFollowUpMessageComponentModel>
+      workFollowUpMessageComponentModels;
+  bool isDataUploading_uploadDataKh5CameraWorkFollowUp = false;
+  FFUploadedFile uploadedLocalFile_uploadDataKh5CameraWorkFollowUp =
       FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
 
-  // Stores action output result for [Backend Call - Create Document] action in CameraIcon widget.
-  ChatMessagesRecord? createImageMessageDoc1Camera;
   // Stores action output result for [Custom Action - uploadFileFirebaseStorage] action in CameraIcon widget.
   String? uploadImageToStorageCamera;
-  bool isDataUploading_uploadDataKh5 = false;
-  FFUploadedFile uploadedLocalFile_uploadDataKh5 =
+  bool isDataUploading_uploadDataKh5WorkFollowUp = false;
+  FFUploadedFile uploadedLocalFile_uploadDataKh5WorkFollowUp =
       FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
 
-  // Stores action output result for [Backend Call - Create Document] action in ImageIcon widget.
-  ChatMessagesRecord? createImageMessageDoc1;
   // Stores action output result for [Custom Action - uploadFileFirebaseStorage] action in ImageIcon widget.
   String? uploadImageToStorage;
   // State field(s) for TextField widget.
@@ -71,21 +67,19 @@ class SingleChatRoomPageModel
   TextEditingController? textController;
   String? Function(BuildContext, String?)? textControllerValidator;
   // Stores action output result for [Backend Call - Create Document] action in SendIcon widget.
-  ChatMessagesRecord? createMessageDoc2;
+  MessageRecord? createMessageDoc2;
 
   @override
   void initState(BuildContext context) {
-    listViewController1 = ScrollController();
-    chatMessageComponentModels =
-        FlutterFlowDynamicModels(() => ChatMessageComponentModel());
-    listViewController2 = ScrollController();
+    listViewController = ScrollController();
+    workFollowUpMessageComponentModels =
+        FlutterFlowDynamicModels(() => WorkFollowUpMessageComponentModel());
   }
 
   @override
   void dispose() {
-    listViewController1?.dispose();
-    chatMessageComponentModels.dispose();
-    listViewController2?.dispose();
+    listViewController?.dispose();
+    workFollowUpMessageComponentModels.dispose();
     textFieldFocusNode?.dispose();
     textController?.dispose();
   }
