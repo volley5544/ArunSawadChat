@@ -174,48 +174,52 @@ class _WorkFollowUpMessageComponentWidgetState
                                       ),
                                     );
                                   } else {
-                                    return Container(
-                                      width: 50.0,
-                                      height: 50.0,
-                                      decoration: BoxDecoration(
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondaryBackground,
-                                        shape: BoxShape.circle,
-                                      ),
-                                      child: InkWell(
-                                        splashColor: Colors.transparent,
-                                        focusColor: Colors.transparent,
-                                        hoverColor: Colors.transparent,
-                                        highlightColor: Colors.transparent,
-                                        onTap: () async {
-                                          await Navigator.push(
-                                            context,
-                                            PageTransition(
-                                              type: PageTransitionType.fade,
-                                              child:
-                                                  FlutterFlowExpandedImageView(
-                                                image: Image.asset(
-                                                  'assets/images/untitled1112.png',
-                                                  fit: BoxFit.contain,
+                                    return Align(
+                                      alignment:
+                                          AlignmentDirectional(0.0, -1.0),
+                                      child: Container(
+                                        width: 50.0,
+                                        height: 50.0,
+                                        decoration: BoxDecoration(
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondaryBackground,
+                                          shape: BoxShape.circle,
+                                        ),
+                                        child: InkWell(
+                                          splashColor: Colors.transparent,
+                                          focusColor: Colors.transparent,
+                                          hoverColor: Colors.transparent,
+                                          highlightColor: Colors.transparent,
+                                          onTap: () async {
+                                            await Navigator.push(
+                                              context,
+                                              PageTransition(
+                                                type: PageTransitionType.fade,
+                                                child:
+                                                    FlutterFlowExpandedImageView(
+                                                  image: Image.asset(
+                                                    'assets/images/untitled1112.png',
+                                                    fit: BoxFit.contain,
+                                                  ),
+                                                  allowRotation: false,
+                                                  tag: 'imageTag1',
+                                                  useHeroAnimation: true,
                                                 ),
-                                                allowRotation: false,
-                                                tag: 'imageTag1',
-                                                useHeroAnimation: true,
                                               ),
-                                            ),
-                                          );
-                                        },
-                                        child: Hero(
-                                          tag: 'imageTag1',
-                                          transitionOnUserGestures: true,
-                                          child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(50.0),
-                                            child: Image.asset(
-                                              'assets/images/untitled1112.png',
-                                              width: double.infinity,
-                                              height: double.infinity,
-                                              fit: BoxFit.cover,
+                                            );
+                                          },
+                                          child: Hero(
+                                            tag: 'imageTag1',
+                                            transitionOnUserGestures: true,
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(50.0),
+                                              child: Image.asset(
+                                                'assets/images/untitled1112.png',
+                                                width: double.infinity,
+                                                height: double.infinity,
+                                                fit: BoxFit.cover,
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -315,10 +319,37 @@ class _WorkFollowUpMessageComponentWidgetState
                                             child: Container(
                                               constraints: BoxConstraints(
                                                 minHeight: 40.0,
-                                                maxWidth:
-                                                    MediaQuery.sizeOf(context)
+                                                maxWidth: () {
+                                                  if (MediaQuery.sizeOf(context)
+                                                          .width <
+                                                      kBreakpointSmall) {
+                                                    return (MediaQuery.sizeOf(
+                                                                context)
                                                             .width *
-                                                        0.65,
+                                                        0.65);
+                                                  } else if (MediaQuery.sizeOf(
+                                                              context)
+                                                          .width <
+                                                      kBreakpointMedium) {
+                                                    return (MediaQuery.sizeOf(
+                                                                context)
+                                                            .width *
+                                                        0.65);
+                                                  } else if (MediaQuery.sizeOf(
+                                                              context)
+                                                          .width <
+                                                      kBreakpointLarge) {
+                                                    return (MediaQuery.sizeOf(
+                                                                context)
+                                                            .width *
+                                                        0.65);
+                                                  } else {
+                                                    return (MediaQuery.sizeOf(
+                                                                context)
+                                                            .width *
+                                                        0.35);
+                                                  }
+                                                }(),
                                               ),
                                               decoration: BoxDecoration(
                                                 color: Color(0xFF3F37FF),
@@ -483,12 +514,18 @@ class _WorkFollowUpMessageComponentWidgetState
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         8.0, 4.0, 0.0, 0.0),
                                     child: Text(
-                                      dateTimeFormat(
-                                        "Hm",
-                                        widget.messageDocData!.time!,
-                                        locale: FFLocalizations.of(context)
-                                            .languageCode,
-                                      ),
+                                      ('${widget.messageDocData?.time?.toString()}' !=
+                                                  'null') &&
+                                              ('${widget.messageDocData?.time?.toString()}' !=
+                                                  '')
+                                          ? dateTimeFormat(
+                                              "Hm",
+                                              widget.messageDocData!.time!,
+                                              locale:
+                                                  FFLocalizations.of(context)
+                                                      .languageCode,
+                                            )
+                                          : '',
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .override(

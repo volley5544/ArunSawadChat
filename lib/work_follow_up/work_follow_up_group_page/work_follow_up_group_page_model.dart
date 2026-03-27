@@ -1,8 +1,25 @@
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
+import '/components/empty_chat_component_widget.dart';
 import '/components/work_follow_up_message_component_widget.dart';
+import '/flutter_flow/flutter_flow_expanded_image_view.dart';
+import '/flutter_flow/flutter_flow_icon_button.dart';
+import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
+import '/flutter_flow/upload_data.dart';
+import 'dart:ui';
+import '/custom_code/actions/index.dart' as actions;
+import '/flutter_flow/random_data_util.dart' as random_data;
 import 'work_follow_up_group_page_widget.dart' show WorkFollowUpGroupPageWidget;
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_blurhash/flutter_blurhash.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:octo_image/octo_image.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
 
 class WorkFollowUpGroupPageModel
     extends FlutterFlowModel<WorkFollowUpGroupPageWidget> {
@@ -66,8 +83,6 @@ class WorkFollowUpGroupPageModel
   FocusNode? textFieldFocusNode;
   TextEditingController? textController;
   String? Function(BuildContext, String?)? textControllerValidator;
-  // Stores action output result for [Backend Call - Create Document] action in SendIcon widget.
-  MessageRecord? createMessageDoc2;
 
   @override
   void initState(BuildContext context) {
@@ -82,5 +97,68 @@ class WorkFollowUpGroupPageModel
     workFollowUpMessageComponentModels.dispose();
     textFieldFocusNode?.dispose();
     textController?.dispose();
+  }
+
+  /// Action blocks.
+  Future sentMessageBlock(
+    BuildContext context, {
+    Future Function()? resetFormFields,
+  }) async {
+    MessageRecord? createMessageDoc2;
+
+    if (!(textController.text != '')) {
+      return;
+    }
+    isSendMessageSuccess = false;
+    chatMessagesTemp = textController.text;
+    await resetFormFields?.call();
+
+    var messageRecordReference =
+        MessageRecord.createDoc(FFAppState().workFollowUpGroupRef!);
+    await messageRecordReference.set({
+      ...createMessageRecordData(
+        messageType: 'text',
+        messageText: '${chatMessagesTemp}',
+        userLevel: '${FFAppState().profileApiData.level}',
+        userBranchCode: '${FFAppState().profileApiData.branch}',
+        userBranchName: '${FFAppState().profileApiData.branchName}',
+        isReply: false,
+        senderType: 'normal',
+        userEmployeeId: '${FFAppState().profileApiData.empCode}',
+        userName: '${FFAppState().profileApiData.fullName}',
+      ),
+      ...mapToFirestore(
+        {
+          'time': FieldValue.serverTimestamp(),
+        },
+      ),
+    });
+    createMessageDoc2 = MessageRecord.getDocumentFromData({
+      ...createMessageRecordData(
+        messageType: 'text',
+        messageText: '${chatMessagesTemp}',
+        userLevel: '${FFAppState().profileApiData.level}',
+        userBranchCode: '${FFAppState().profileApiData.branch}',
+        userBranchName: '${FFAppState().profileApiData.branchName}',
+        isReply: false,
+        senderType: 'normal',
+        userEmployeeId: '${FFAppState().profileApiData.empCode}',
+        userName: '${FFAppState().profileApiData.fullName}',
+      ),
+      ...mapToFirestore(
+        {
+          'time': DateTime.now(),
+        },
+      ),
+    }, messageRecordReference);
+
+    await workFollowUpGroupPageWorkFollowUpChatRoomRecord.reference
+        .update(createWorkFollowUpChatRoomRecordData(
+      lastMessage: createMessageDoc2.messageText,
+      lastMessageTime: createMessageDoc2.time,
+      lastMessageBy: createMessageDoc2.userName,
+    ));
+    isSendMessageSuccess = true;
+    chatMessagesTemp = null;
   }
 }

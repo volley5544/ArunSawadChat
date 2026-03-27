@@ -15,6 +15,7 @@ import '/auth/firebase_auth/auth_util.dart';
 
 String? stringToImgPath(String? stringImageLink) {
   return stringImageLink!;
+  print('');
 }
 
 List<DocumentReference>? generateUserRefList(DocumentReference? myUserDocRef) {

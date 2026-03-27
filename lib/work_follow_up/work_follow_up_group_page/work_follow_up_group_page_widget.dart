@@ -88,123 +88,227 @@ class _WorkFollowUpGroupPageWidgetState
           child: Scaffold(
             key: scaffoldKey,
             backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-            appBar: AppBar(
-              backgroundColor: Color(0xFFFF6500),
-              automaticallyImplyLeading: false,
-              leading: InkWell(
-                splashColor: Colors.transparent,
-                focusColor: Colors.transparent,
-                hoverColor: Colors.transparent,
-                highlightColor: Colors.transparent,
-                onTap: () async {
-                  context.safePop();
-                },
-                child: Icon(
-                  Icons.arrow_back_ios_new_sharp,
-                  color: Colors.white,
-                  size: 30.0,
+            appBar: PreferredSize(
+              preferredSize: Size.fromHeight(80.0),
+              child: AppBar(
+                backgroundColor: Color(0xFFFF6500),
+                automaticallyImplyLeading: false,
+                leading: InkWell(
+                  splashColor: Colors.transparent,
+                  focusColor: Colors.transparent,
+                  hoverColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  onTap: () async {
+                    context.safePop();
+                  },
+                  child: Icon(
+                    Icons.arrow_back_ios_new_sharp,
+                    color: Colors.white,
+                    size: 30.0,
+                  ),
                 ),
-              ),
-              title: Row(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 12.0, 0.0),
-                    child: Container(
-                      width: 50.0,
-                      height: 50.0,
-                      decoration: BoxDecoration(
-                        color: FlutterFlowTheme.of(context).secondaryBackground,
-                        shape: BoxShape.circle,
-                      ),
-                      child: InkWell(
-                        splashColor: Colors.transparent,
-                        focusColor: Colors.transparent,
-                        hoverColor: Colors.transparent,
-                        highlightColor: Colors.transparent,
-                        onTap: () async {
-                          await Navigator.push(
-                            context,
-                            PageTransition(
-                              type: PageTransitionType.fade,
-                              child: FlutterFlowExpandedImageView(
-                                image: OctoImage(
-                                  placeholderBuilder: (_) => SizedBox.expand(
-                                    child: Image(
-                                      image: BlurHashImage(
-                                          workFollowUpGroupPageWorkFollowUpChatRoomRecord
-                                              .roomDisplayBlurHash),
-                                      fit: BoxFit.cover,
+                title: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Padding(
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 12.0, 0.0),
+                      child: Container(
+                        width: 50.0,
+                        height: 50.0,
+                        decoration: BoxDecoration(
+                          color:
+                              FlutterFlowTheme.of(context).secondaryBackground,
+                          shape: BoxShape.circle,
+                        ),
+                        child: InkWell(
+                          splashColor: Colors.transparent,
+                          focusColor: Colors.transparent,
+                          hoverColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
+                          onTap: () async {
+                            await Navigator.push(
+                              context,
+                              PageTransition(
+                                type: PageTransitionType.fade,
+                                child: FlutterFlowExpandedImageView(
+                                  image: OctoImage(
+                                    placeholderBuilder: (_) => SizedBox.expand(
+                                      child: Image(
+                                        image: BlurHashImage(
+                                            workFollowUpGroupPageWorkFollowUpChatRoomRecord
+                                                .roomDisplayBlurHash),
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
-                                  ),
-                                  image: CachedNetworkImageProvider(
-                                    valueOrDefault<String>(
-                                      workFollowUpGroupPageWorkFollowUpChatRoomRecord
-                                          .roomDisplayImage,
-                                      'https://firebasestorage.googleapis.com/v0/b/flut-flow-test.appspot.com/o/UsersProfileImage%2Fgroup-chat.png?alt=media&token=ec0e798c-11e6-4bc9-8b0a-7253e3960af0',
+                                    image: CachedNetworkImageProvider(
+                                      valueOrDefault<String>(
+                                        workFollowUpGroupPageWorkFollowUpChatRoomRecord
+                                            .roomDisplayImage,
+                                        'https://firebasestorage.googleapis.com/v0/b/flut-flow-test.appspot.com/o/UsersProfileImage%2Fgroup-chat.png?alt=media&token=ec0e798c-11e6-4bc9-8b0a-7253e3960af0',
+                                      ),
                                     ),
+                                    fit: BoxFit.contain,
                                   ),
-                                  fit: BoxFit.contain,
+                                  allowRotation: false,
+                                  tag: valueOrDefault<String>(
+                                    workFollowUpGroupPageWorkFollowUpChatRoomRecord
+                                        .roomDisplayImage,
+                                    'https://firebasestorage.googleapis.com/v0/b/flut-flow-test.appspot.com/o/UsersProfileImage%2Fgroup-chat.png?alt=media&token=ec0e798c-11e6-4bc9-8b0a-7253e3960af0',
+                                  ),
+                                  useHeroAnimation: true,
                                 ),
-                                allowRotation: false,
-                                tag: valueOrDefault<String>(
-                                  workFollowUpGroupPageWorkFollowUpChatRoomRecord
-                                      .roomDisplayImage,
-                                  'https://firebasestorage.googleapis.com/v0/b/flut-flow-test.appspot.com/o/UsersProfileImage%2Fgroup-chat.png?alt=media&token=ec0e798c-11e6-4bc9-8b0a-7253e3960af0',
-                                ),
-                                useHeroAnimation: true,
                               ),
+                            );
+                          },
+                          child: Hero(
+                            tag: valueOrDefault<String>(
+                              workFollowUpGroupPageWorkFollowUpChatRoomRecord
+                                  .roomDisplayImage,
+                              'https://firebasestorage.googleapis.com/v0/b/flut-flow-test.appspot.com/o/UsersProfileImage%2Fgroup-chat.png?alt=media&token=ec0e798c-11e6-4bc9-8b0a-7253e3960af0',
                             ),
-                          );
-                        },
-                        child: Hero(
-                          tag: valueOrDefault<String>(
-                            workFollowUpGroupPageWorkFollowUpChatRoomRecord
-                                .roomDisplayImage,
-                            'https://firebasestorage.googleapis.com/v0/b/flut-flow-test.appspot.com/o/UsersProfileImage%2Fgroup-chat.png?alt=media&token=ec0e798c-11e6-4bc9-8b0a-7253e3960af0',
-                          ),
-                          transitionOnUserGestures: true,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(50.0),
-                            child: OctoImage(
-                              placeholderBuilder: (_) => SizedBox.expand(
-                                child: Image(
-                                  image: BlurHashImage(
-                                      workFollowUpGroupPageWorkFollowUpChatRoomRecord
-                                          .roomDisplayBlurHash),
-                                  fit: BoxFit.cover,
+                            transitionOnUserGestures: true,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(50.0),
+                              child: OctoImage(
+                                placeholderBuilder: (_) => SizedBox.expand(
+                                  child: Image(
+                                    image: BlurHashImage(
+                                        workFollowUpGroupPageWorkFollowUpChatRoomRecord
+                                            .roomDisplayBlurHash),
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
-                              ),
-                              image: CachedNetworkImageProvider(
-                                valueOrDefault<String>(
-                                  workFollowUpGroupPageWorkFollowUpChatRoomRecord
-                                      .roomDisplayImage,
-                                  'https://firebasestorage.googleapis.com/v0/b/flut-flow-test.appspot.com/o/UsersProfileImage%2Fgroup-chat.png?alt=media&token=ec0e798c-11e6-4bc9-8b0a-7253e3960af0',
+                                image: CachedNetworkImageProvider(
+                                  valueOrDefault<String>(
+                                    workFollowUpGroupPageWorkFollowUpChatRoomRecord
+                                        .roomDisplayImage,
+                                    'https://firebasestorage.googleapis.com/v0/b/flut-flow-test.appspot.com/o/UsersProfileImage%2Fgroup-chat.png?alt=media&token=ec0e798c-11e6-4bc9-8b0a-7253e3960af0',
+                                  ),
                                 ),
+                                width: double.infinity,
+                                height: double.infinity,
+                                fit: BoxFit.cover,
                               ),
-                              width: double.infinity,
-                              height: double.infinity,
-                              fit: BoxFit.cover,
                             ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  InkWell(
-                    splashColor: Colors.transparent,
-                    focusColor: Colors.transparent,
-                    hoverColor: Colors.transparent,
-                    highlightColor: Colors.transparent,
-                    onTap: () async {
+                    InkWell(
+                      splashColor: Colors.transparent,
+                      focusColor: Colors.transparent,
+                      hoverColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      onTap: () async {
+                        var messageRecordReference = MessageRecord.createDoc(
+                            FFAppState().workFollowUpGroupRef!);
+                        await messageRecordReference.set({
+                          ...createMessageRecordData(
+                            messageType: 'text',
+                            messageText:
+                                'แจ้งชำระเงินสำเร็จ (KBank)วัน/เวลาที่ส่งข้อความ : 27/03/2026 15:59:19ระบบ : ศรีสวัสดิ์ ประกันทันใจRef1 : 43064320260327151831Ref2 : 0010120260305862Biller ID : 010555912674765Sender Bank : SCBTransaction ID : KB001_20260327_014ED433E228A634D96สถานะ : ชำระแล้วจำนวนเงิน : 967.28วันที่ชำระเงิน : 2026-03-27เวลาชำระเงิน : 15:59:18รายละเอียดเพิ่มเติมชื่อลูกค้า : นางสาวอารียา ไชยแสนเบอร์โทรลูกค้า : 0637860359สาขา : ตำบลศรีสงครามบริษัท : ไทยไพบูลย์ประกันภัยรหัส source_refer_id : 215480รหัส log_source_id : 15833110',
+                            senderType: 'system',
+                          ),
+                          ...mapToFirestore(
+                            {
+                              'time': FieldValue.serverTimestamp(),
+                            },
+                          ),
+                        });
+                        _model.createInitialMessageDoc =
+                            MessageRecord.getDocumentFromData({
+                          ...createMessageRecordData(
+                            messageType: 'text',
+                            messageText:
+                                'แจ้งชำระเงินสำเร็จ (KBank)วัน/เวลาที่ส่งข้อความ : 27/03/2026 15:59:19ระบบ : ศรีสวัสดิ์ ประกันทันใจRef1 : 43064320260327151831Ref2 : 0010120260305862Biller ID : 010555912674765Sender Bank : SCBTransaction ID : KB001_20260327_014ED433E228A634D96สถานะ : ชำระแล้วจำนวนเงิน : 967.28วันที่ชำระเงิน : 2026-03-27เวลาชำระเงิน : 15:59:18รายละเอียดเพิ่มเติมชื่อลูกค้า : นางสาวอารียา ไชยแสนเบอร์โทรลูกค้า : 0637860359สาขา : ตำบลศรีสงครามบริษัท : ไทยไพบูลย์ประกันภัยรหัส source_refer_id : 215480รหัส log_source_id : 15833110',
+                            senderType: 'system',
+                          ),
+                          ...mapToFirestore(
+                            {
+                              'time': DateTime.now(),
+                            },
+                          ),
+                        }, messageRecordReference);
+
+                        await FFAppState()
+                            .workFollowUpGroupRef!
+                            .update(createWorkFollowUpChatRoomRecordData(
+                              lastMessage:
+                                  _model.createInitialMessageDoc?.messageText,
+                              lastMessageBy: 'น้องทันใจ',
+                              lastMessageTime:
+                                  _model.createInitialMessageDoc?.time,
+                            ));
+
+                        safeSetState(() {});
+                      },
+                      child: Text(
+                        workFollowUpGroupPageWorkFollowUpChatRoomRecord
+                            .roomName,
+                        style: FlutterFlowTheme.of(context)
+                            .headlineMedium
+                            .override(
+                              font: GoogleFonts.interTight(
+                                fontWeight: FlutterFlowTheme.of(context)
+                                    .headlineMedium
+                                    .fontWeight,
+                                fontStyle: FlutterFlowTheme.of(context)
+                                    .headlineMedium
+                                    .fontStyle,
+                              ),
+                              color: Colors.white,
+                              fontSize: 18.0,
+                              letterSpacing: 0.0,
+                              fontWeight: FlutterFlowTheme.of(context)
+                                  .headlineMedium
+                                  .fontWeight,
+                              fontStyle: FlutterFlowTheme.of(context)
+                                  .headlineMedium
+                                  .fontStyle,
+                            ),
+                      ),
+                    ),
+                    InkWell(
+                      splashColor: Colors.transparent,
+                      focusColor: Colors.transparent,
+                      hoverColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      onTap: () async {
+                        await _model.listViewController?.animateTo(
+                          _model.listViewController!.position.maxScrollExtent,
+                          duration: Duration(milliseconds: 100),
+                          curve: Curves.ease,
+                        );
+                      },
+                      child: Container(
+                        width: 1.0,
+                        height: 1.0,
+                        decoration: BoxDecoration(
+                          color: FlutterFlowTheme.of(context).secondary,
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                actions: [
+                  FlutterFlowIconButton(
+                    borderRadius: 8.0,
+                    buttonSize: 60.0,
+                    icon: Icon(
+                      Icons.settings_sharp,
+                      color: FlutterFlowTheme.of(context).secondaryBackground,
+                      size: 30.0,
+                    ),
+                    onPressed: () async {
                       var messageRecordReference = MessageRecord.createDoc(
                           FFAppState().workFollowUpGroupRef!);
                       await messageRecordReference.set({
                         ...createMessageRecordData(
                           messageType: 'text',
                           messageText:
-                              'แจ้งชำระเงินสำเร็จ (KBank)วัน/เวลาที่ส่งข้อความ : 27/03/2026 15:59:19ระบบ : ศรีสวัสดิ์ ประกันทันใจRef1 : 43064320260327151831Ref2 : 0010120260305862Biller ID : 010555912674765Sender Bank : SCBTransaction ID : KB001_20260327_014ED433E228A634D96สถานะ : ชำระแล้วจำนวนเงิน : 967.28วันที่ชำระเงิน : 2026-03-27เวลาชำระเงิน : 15:59:18รายละเอียดเพิ่มเติมชื่อลูกค้า : นางสาวอารียา ไชยแสนเบอร์โทรลูกค้า : 0637860359สาขา : ตำบลศรีสงครามบริษัท : ไทยไพบูลย์ประกันภัยรหัส source_refer_id : 215480รหัส log_source_id : 15833110',
+                              'ตรวจสอบข้อมูลไม่สำเร็จ (KBank)ระบบ : ศรีสวัสดิ์ ประกันทันใจวัน/เวลาที่ส่งข้อความ : 27/03/2026 15:09:46Ref1 : 39758620260130140942Ref2 : 0010220260105472Biller ID : 98200Sender Bank : KBankTransaction ID : 98200270320261509463166799จำนวนเงิน : 1,590.00ResponseCode : 0003ResponseDescription : Payment time expiredรายละเอียดเพิ่มเติมชื่อลูกค้า : นางนางแสงจันทร์ สีพั่วเบอร์โทรลูกค้า : 0656245949สาขา : กุฉินารายณ์ตรงข้ามบิ๊กซีบริษัท : ประกันภัย-เมืองไทยต้องชำระเงินภายในวัน/เวลา : 30/01/2026 (18:24:57)',
                           senderType: 'system',
                         ),
                         ...mapToFirestore(
@@ -213,12 +317,12 @@ class _WorkFollowUpGroupPageWidgetState
                           },
                         ),
                       });
-                      _model.createInitialMessageDoc =
+                      _model.createInitialMessageDoc2 =
                           MessageRecord.getDocumentFromData({
                         ...createMessageRecordData(
                           messageType: 'text',
                           messageText:
-                              'แจ้งชำระเงินสำเร็จ (KBank)วัน/เวลาที่ส่งข้อความ : 27/03/2026 15:59:19ระบบ : ศรีสวัสดิ์ ประกันทันใจRef1 : 43064320260327151831Ref2 : 0010120260305862Biller ID : 010555912674765Sender Bank : SCBTransaction ID : KB001_20260327_014ED433E228A634D96สถานะ : ชำระแล้วจำนวนเงิน : 967.28วันที่ชำระเงิน : 2026-03-27เวลาชำระเงิน : 15:59:18รายละเอียดเพิ่มเติมชื่อลูกค้า : นางสาวอารียา ไชยแสนเบอร์โทรลูกค้า : 0637860359สาขา : ตำบลศรีสงครามบริษัท : ไทยไพบูลย์ประกันภัยรหัส source_refer_id : 215480รหัส log_source_id : 15833110',
+                              'ตรวจสอบข้อมูลไม่สำเร็จ (KBank)ระบบ : ศรีสวัสดิ์ ประกันทันใจวัน/เวลาที่ส่งข้อความ : 27/03/2026 15:09:46Ref1 : 39758620260130140942Ref2 : 0010220260105472Biller ID : 98200Sender Bank : KBankTransaction ID : 98200270320261509463166799จำนวนเงิน : 1,590.00ResponseCode : 0003ResponseDescription : Payment time expiredรายละเอียดเพิ่มเติมชื่อลูกค้า : นางนางแสงจันทร์ สีพั่วเบอร์โทรลูกค้า : 0656245949สาขา : กุฉินารายณ์ตรงข้ามบิ๊กซีบริษัท : ประกันภัย-เมืองไทยต้องชำระเงินภายในวัน/เวลา : 30/01/2026 (18:24:57)',
                           senderType: 'system',
                         ),
                         ...mapToFirestore(
@@ -232,117 +336,20 @@ class _WorkFollowUpGroupPageWidgetState
                           .workFollowUpGroupRef!
                           .update(createWorkFollowUpChatRoomRecordData(
                             lastMessage:
-                                _model.createInitialMessageDoc?.messageText,
+                                _model.createInitialMessageDoc2?.messageText,
                             lastMessageBy: 'น้องทันใจ',
                             lastMessageTime:
-                                _model.createInitialMessageDoc?.time,
+                                _model.createInitialMessageDoc2?.time,
                           ));
 
                       safeSetState(() {});
                     },
-                    child: Text(
-                      workFollowUpGroupPageWorkFollowUpChatRoomRecord.roomName,
-                      style:
-                          FlutterFlowTheme.of(context).headlineMedium.override(
-                                font: GoogleFonts.interTight(
-                                  fontWeight: FlutterFlowTheme.of(context)
-                                      .headlineMedium
-                                      .fontWeight,
-                                  fontStyle: FlutterFlowTheme.of(context)
-                                      .headlineMedium
-                                      .fontStyle,
-                                ),
-                                color: Colors.white,
-                                fontSize: 18.0,
-                                letterSpacing: 0.0,
-                                fontWeight: FlutterFlowTheme.of(context)
-                                    .headlineMedium
-                                    .fontWeight,
-                                fontStyle: FlutterFlowTheme.of(context)
-                                    .headlineMedium
-                                    .fontStyle,
-                              ),
-                    ),
-                  ),
-                  InkWell(
-                    splashColor: Colors.transparent,
-                    focusColor: Colors.transparent,
-                    hoverColor: Colors.transparent,
-                    highlightColor: Colors.transparent,
-                    onTap: () async {
-                      await _model.listViewController?.animateTo(
-                        _model.listViewController!.position.maxScrollExtent,
-                        duration: Duration(milliseconds: 100),
-                        curve: Curves.ease,
-                      );
-                    },
-                    child: Container(
-                      width: 1.0,
-                      height: 1.0,
-                      decoration: BoxDecoration(
-                        color: FlutterFlowTheme.of(context).secondary,
-                        shape: BoxShape.circle,
-                      ),
-                    ),
                   ),
                 ],
+                centerTitle: false,
+                toolbarHeight: 80.0,
+                elevation: 2.0,
               ),
-              actions: [
-                FlutterFlowIconButton(
-                  borderRadius: 8.0,
-                  buttonSize: 60.0,
-                  icon: Icon(
-                    Icons.settings_sharp,
-                    color: FlutterFlowTheme.of(context).secondaryBackground,
-                    size: 30.0,
-                  ),
-                  onPressed: () async {
-                    var messageRecordReference = MessageRecord.createDoc(
-                        FFAppState().workFollowUpGroupRef!);
-                    await messageRecordReference.set({
-                      ...createMessageRecordData(
-                        messageType: 'text',
-                        messageText:
-                            'ตรวจสอบข้อมูลไม่สำเร็จ (KBank)ระบบ : ศรีสวัสดิ์ ประกันทันใจวัน/เวลาที่ส่งข้อความ : 27/03/2026 15:09:46Ref1 : 39758620260130140942Ref2 : 0010220260105472Biller ID : 98200Sender Bank : KBankTransaction ID : 98200270320261509463166799จำนวนเงิน : 1,590.00ResponseCode : 0003ResponseDescription : Payment time expiredรายละเอียดเพิ่มเติมชื่อลูกค้า : นางนางแสงจันทร์ สีพั่วเบอร์โทรลูกค้า : 0656245949สาขา : กุฉินารายณ์ตรงข้ามบิ๊กซีบริษัท : ประกันภัย-เมืองไทยต้องชำระเงินภายในวัน/เวลา : 30/01/2026 (18:24:57)',
-                        senderType: 'system',
-                      ),
-                      ...mapToFirestore(
-                        {
-                          'time': FieldValue.serverTimestamp(),
-                        },
-                      ),
-                    });
-                    _model.createInitialMessageDoc2 =
-                        MessageRecord.getDocumentFromData({
-                      ...createMessageRecordData(
-                        messageType: 'text',
-                        messageText:
-                            'ตรวจสอบข้อมูลไม่สำเร็จ (KBank)ระบบ : ศรีสวัสดิ์ ประกันทันใจวัน/เวลาที่ส่งข้อความ : 27/03/2026 15:09:46Ref1 : 39758620260130140942Ref2 : 0010220260105472Biller ID : 98200Sender Bank : KBankTransaction ID : 98200270320261509463166799จำนวนเงิน : 1,590.00ResponseCode : 0003ResponseDescription : Payment time expiredรายละเอียดเพิ่มเติมชื่อลูกค้า : นางนางแสงจันทร์ สีพั่วเบอร์โทรลูกค้า : 0656245949สาขา : กุฉินารายณ์ตรงข้ามบิ๊กซีบริษัท : ประกันภัย-เมืองไทยต้องชำระเงินภายในวัน/เวลา : 30/01/2026 (18:24:57)',
-                        senderType: 'system',
-                      ),
-                      ...mapToFirestore(
-                        {
-                          'time': DateTime.now(),
-                        },
-                      ),
-                    }, messageRecordReference);
-
-                    await FFAppState()
-                        .workFollowUpGroupRef!
-                        .update(createWorkFollowUpChatRoomRecordData(
-                          lastMessage:
-                              _model.createInitialMessageDoc2?.messageText,
-                          lastMessageBy: 'น้องทันใจ',
-                          lastMessageTime:
-                              _model.createInitialMessageDoc2?.time,
-                        ));
-
-                    safeSetState(() {});
-                  },
-                ),
-              ],
-              centerTitle: false,
-              elevation: 2.0,
             ),
             body: SafeArea(
               top: true,
@@ -709,6 +716,17 @@ class _WorkFollowUpGroupPageWidgetState
                                               controller: _model.textController,
                                               focusNode:
                                                   _model.textFieldFocusNode,
+                                              onFieldSubmitted: (_) async {
+                                                await _model.sentMessageBlock(
+                                                  context,
+                                                  resetFormFields: () async {
+                                                    safeSetState(() {
+                                                      _model.textController
+                                                          ?.clear();
+                                                    });
+                                                  },
+                                                );
+                                              },
                                               autofocus: false,
                                               obscureText: false,
                                               decoration: InputDecoration(
@@ -890,91 +908,14 @@ class _WorkFollowUpGroupPageWidgetState
                                       hoverColor: Colors.transparent,
                                       highlightColor: Colors.transparent,
                                       onTap: () async {
-                                        var _shouldSetState = false;
-                                        if (!(_model.textController.text != '')) {
-                                          if (_shouldSetState)
-                                            safeSetState(() {});
-                                          return;
-                                        }
-                                        _model.isSendMessageSuccess = false;
-                                        _model.chatMessagesTemp =
-                                            _model.textController.text;
-                                        safeSetState(() {});
-                                        safeSetState(() {
-                                          _model.textController?.clear();
-                                        });
-
-                                        var messageRecordReference =
-                                            MessageRecord.createDoc(FFAppState()
-                                                .workFollowUpGroupRef!);
-                                        await messageRecordReference.set({
-                                          ...createMessageRecordData(
-                                            messageType: 'text',
-                                            messageText:
-                                                '${_model.textController.text}',
-                                            userLevel:
-                                                '${FFAppState().profileApiData.level}',
-                                            userBranchCode:
-                                                '${FFAppState().profileApiData.branch}',
-                                            userBranchName:
-                                                '${FFAppState().profileApiData.department}',
-                                            isReply: false,
-                                            senderType: 'normal',
-                                            userEmployeeId:
-                                                '${FFAppState().profileApiData.empCode}',
-                                            userName:
-                                                '${FFAppState().profileApiData.fullName}',
-                                          ),
-                                          ...mapToFirestore(
-                                            {
-                                              'time':
-                                                  FieldValue.serverTimestamp(),
-                                            },
-                                          ),
-                                        });
-                                        _model.createMessageDoc2 =
-                                            MessageRecord.getDocumentFromData({
-                                          ...createMessageRecordData(
-                                            messageType: 'text',
-                                            messageText:
-                                                '${_model.textController.text}',
-                                            userLevel:
-                                                '${FFAppState().profileApiData.level}',
-                                            userBranchCode:
-                                                '${FFAppState().profileApiData.branch}',
-                                            userBranchName:
-                                                '${FFAppState().profileApiData.department}',
-                                            isReply: false,
-                                            senderType: 'normal',
-                                            userEmployeeId:
-                                                '${FFAppState().profileApiData.empCode}',
-                                            userName:
-                                                '${FFAppState().profileApiData.fullName}',
-                                          ),
-                                          ...mapToFirestore(
-                                            {
-                                              'time': DateTime.now(),
-                                            },
-                                          ),
-                                        }, messageRecordReference);
-                                        _shouldSetState = true;
-
-                                        await workFollowUpGroupPageWorkFollowUpChatRoomRecord
-                                            .reference
-                                            .update(
-                                                createWorkFollowUpChatRoomRecordData(
-                                          lastMessage: _model
-                                              .createMessageDoc2?.messageText,
-                                          lastMessageTime:
-                                              _model.createMessageDoc2?.time,
-                                          lastMessageBy: _model
-                                              .createMessageDoc2?.userName,
-                                        ));
-                                        _model.isSendMessageSuccess = true;
-                                        _model.chatMessagesTemp = null;
-                                        safeSetState(() {});
-                                        if (_shouldSetState)
-                                          safeSetState(() {});
+                                        await _model.sentMessageBlock(
+                                          context,
+                                          resetFormFields: () async {
+                                            safeSetState(() {
+                                              _model.textController?.clear();
+                                            });
+                                          },
+                                        );
                                       },
                                       child: Icon(
                                         Icons.send_outlined,
